@@ -162,11 +162,15 @@ function renderPicker(projects, L) {
   const mod = (a, n) => ((a % n) + n) % n;
   const measure = () => {
     ih = items[0].offsetHeight || 80; R = ih / (STEP * Math.PI / 180);
-    /* shrink the font until the longest name fits inside the wheel (anything wider gets clipped by its mask) */
+    /* Fit the longest name inside the wheel (anything wider is clipped by its mask). Always measure at the
+       natural size, otherwise the result depends on the previous fit. scrollWidth also counts overflowing text. */
     wheel.style.removeProperty('--fs');
-    const widest = Math.max(...items.map(el => el.offsetWidth)), avail = wheel.clientWidth;
-    if (widest > avail && avail > 0) wheel.style.setProperty('--fs', `${(ih * .74 * (avail / widest) * .97).toFixed(2)}px`);
+    const widest = Math.max(...items.map(el => Math.max(el.offsetWidth, el.scrollWidth))), avail = wheel.clientWidth;
+    if (widest > avail && avail > 0) wheel.style.setProperty('--fs', `${(ih * .74 * (avail / widest) * .96).toFixed(2)}px`);
   };
+  /* The text width changes when the web font swaps in, so refit on any size change, not just on resize. */
+  let fitRaf = 0;
+  const refit = () => { if (fitRaf) return; fitRaf = requestAnimationFrame(() => { fitRaf = 0; measure(); kick(); }); };
   function frame(t = performance.now()) {
     raf = 0;
     /* time-based easing so the wheel feels identical on 60/120/144Hz screens */
@@ -230,9 +234,10 @@ function renderPicker(projects, L) {
     else if (e.key === 'ArrowUp') { e.preventDefault(); target = Math.round(target) - 1; kick(); }
     else if (e.key === 'Enter') location.href = projectUrl(projects[mod(Math.round(target), N)]);
   });
-  addEventListener('resize', () => { measure(); kick(); });
+  addEventListener('resize', refit);
   measure(); frame();
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); kick(); });
+  if (document.fonts) { document.fonts.ready.then(refit); document.fonts.addEventListener('loadingdone', refit); }
+  if (window.ResizeObserver) { const ro = new ResizeObserver(refit); ro.observe(wheel); items.forEach(el => ro.observe(el)); }
 }
 
 function renderHome({ site, projects, maintainers, devices }) {

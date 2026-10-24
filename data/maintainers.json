@@ -1,32 +1,24 @@
 [
   {
-    "name": "TXO R",
+    "name": "txorav",
     "image": "assets/maintainers/m1.svg",
-    "description": "Lead Developer & Kernel Maintainer. Focuses on device bring-up, rock-solid daily reliability, and Begonia kernel architecture.",
+    "description": "Lead Developer & Graphic Designer. Core architect of Pox Kernel, Companion applications, device stability, and UI/visual design.",
     "socials": [
       { "label": "GitHub", "url": "https://github.com/txorav" },
       { "label": "POX Project", "url": "https://github.com/POX-project" }
     ]
   },
   {
-    "name": "Dinolek",
+    "name": "methylphetamine",
     "image": "assets/maintainers/m2.svg",
-    "description": "Core Linux Kernel Developer. Specializes in MediaTek platform bring-up, low-level subsystem drivers, and upstreaming.",
+    "description": "Core Contributor & Developer. Focuses on device bring-up, Linux kernel upstreaming, and low-level hardware optimizations.",
     "socials": [
-      { "label": "GitHub", "url": "https://github.com/Dinolek" }
-    ]
-  },
-  {
-    "name": "Animesh Gupta",
-    "image": "assets/maintainers/m3.svg",
-    "description": "Android UI & Application Developer. Creator and maintainer of Smart Island (Dynamic Island) for Android.",
-    "socials": [
-      { "label": "GitHub", "url": "https://github.com/agupta07505" }
+      { "label": "GitHub", "url": "https://github.com/methylphetamine" }
     ]
   },
   {
     "name": "POX Community",
-    "image": "assets/maintainers/m4.svg",
+    "image": "assets/maintainers/m3.svg",
     "description": "Community contributors helping with device testing, diagnostic logs, documentation, and troubleshooting guides.",
     "socials": [
       { "label": "GitHub", "url": "https://github.com/POX-project" },
