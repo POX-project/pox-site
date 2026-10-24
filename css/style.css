@@ -1,13 +1,14 @@
 :root{--navy:#030164;--light:#F5F7FD;--coral:#FF4B3E;--mint:#00E599;--ease:cubic-bezier(.16,1,.3,1)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+@supports not (overflow-x:clip){html,body{overflow-x:hidden}}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity;overflow-x:clip;max-width:100%;overscroll-behavior-x:none}
 :focus-visible{outline:2px solid currentColor;outline-offset:5px}
 button,a,input,select,textarea{touch-action:manipulation}
 body{
   --bg:var(--navy);--fg:var(--light);--a:var(--mint);
   --req-bg:var(--mint);--req-fg:var(--navy);--chip-bg:var(--light);--chip-fg:var(--navy);
-  background:var(--bg);color:var(--fg);font-family:"Kode Mono",monospace;overflow-x:hidden;line-height:1.5;
+  background:var(--bg);color:var(--fg);font-family:"Kode Mono",monospace;overflow-x:hidden;overflow-x:clip;max-width:100%;overflow-wrap:break-word;line-height:1.5;
   transition:background-color .7s var(--ease),color .7s var(--ease)}
 body[data-theme=light]{--bg:var(--light);--fg:var(--navy);--a:var(--coral);--chip-bg:var(--navy);--chip-fg:var(--light)}
 body[data-theme=mint]{--bg:var(--mint);--fg:var(--navy);--a:var(--light);--req-bg:var(--navy);--req-fg:var(--mint);--chip-bg:var(--navy);--chip-fg:var(--mint)}
@@ -276,7 +277,10 @@ a{color:inherit;text-decoration:none}
   .hero{min-height:100svh}
   .header,.header.scrolled{padding:12px 20px}
   .nav{gap:8px;flex-wrap:wrap}
-  .nav>.ctas{margin-left:auto;gap:6px}
+  .nav>*{min-width:0}
+  .nav>.ctas{margin-left:auto;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .btn.go,.btn.big{white-space:normal;max-width:100%;text-align:center;justify-content:center;line-height:1.3;padding:12px 22px}
+  .chip{max-width:100%;overflow-wrap:anywhere}
   .nav-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:8px 10px;border:1px solid color-mix(in srgb,currentColor 35%,transparent);border-radius:12px;background:transparent;color:inherit;font:inherit;font-size:.8rem;font-weight:600;cursor:pointer;flex-shrink:0}
   .nav>.links{display:none;order:3;flex-basis:100%;width:100%;padding:12px 0 4px;gap:4px;align-items:stretch;font-size:1rem}
   .header.menu-open{max-height:100svh;overflow-y:auto;background:var(--bg);border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent)}
