@@ -1,38 +1,36 @@
 [
   {
-    "name": "Maintainer 01 (Dummy)",
+    "name": "TXO R",
     "image": "assets/maintainers/m1.svg",
-    "description": "Sample bio: Works on device bring-up and keeping everyday builds dependable.",
+    "description": "Lead Developer & Kernel Maintainer. Focuses on device bring-up, rock-solid daily reliability, and Begonia kernel architecture.",
     "socials": [
-      { "label": "GitHub", "url": "https://github.com/pox-project" },
-      { "label": "Telegram", "url": "https://t.me/" }
+      { "label": "GitHub", "url": "https://github.com/txorav" },
+      { "label": "POX Project", "url": "https://github.com/POX-project" }
     ]
   },
   {
-    "name": "Maintainer 02 (Dummy)",
+    "name": "Dinolek",
     "image": "assets/maintainers/m2.svg",
-    "description": "Sample bio: Focuses on kernel development, battery efficiency, and smooth performance.",
+    "description": "Core Linux Kernel Developer. Specializes in MediaTek platform bring-up, low-level subsystem drivers, and upstreaming.",
     "socials": [
-      { "label": "GitHub", "url": "https://github.com/pox-project" },
-      { "label": "Twitter", "url": "https://twitter.com/" }
+      { "label": "GitHub", "url": "https://github.com/Dinolek" }
     ]
   },
   {
-    "name": "Maintainer 03 (Dummy)",
+    "name": "Animesh Gupta",
     "image": "assets/maintainers/m3.svg",
-    "description": "Sample bio: Helps test releases, investigate bugs, and improve the user experience.",
+    "description": "Android UI & Application Developer. Creator and maintainer of Smart Island (Dynamic Island) for Android.",
     "socials": [
-      { "label": "GitHub", "url": "https://github.com/pox-project" },
-      { "label": "Instagram", "url": "https://instagram.com/" }
+      { "label": "GitHub", "url": "https://github.com/agupta07505" }
     ]
   },
   {
-    "name": "Maintainer 04 (Dummy)",
+    "name": "POX Community",
     "image": "assets/maintainers/m4.svg",
-    "description": "Sample bio: Looks after documentation, community feedback, and getting started guides.",
+    "description": "Community contributors helping with device testing, diagnostic logs, documentation, and troubleshooting guides.",
     "socials": [
-      { "label": "GitHub", "url": "https://github.com/pox-project" },
-      { "label": "Website", "url": "https://pox-project.org" }
+      { "label": "GitHub", "url": "https://github.com/POX-project" },
+      { "label": "Docs", "url": "https://pox-project.github.io/bego-docs/" }
     ]
   }
 ]

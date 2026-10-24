@@ -160,7 +160,13 @@ function renderPicker(projects, L) {
 
   let pos = 0, target = 0, raf = 0, lastF = 0, ih = 80, R = 200, cur = -1, detT, snapT, moved = 0;
   const mod = (a, n) => ((a % n) + n) % n;
-  const measure = () => { ih = items[0].offsetHeight || 80; R = ih / (STEP * Math.PI / 180); };
+  const measure = () => {
+    ih = items[0].offsetHeight || 80; R = ih / (STEP * Math.PI / 180);
+    /* shrink the font until the longest name fits inside the wheel (anything wider gets clipped by its mask) */
+    wheel.style.removeProperty('--fs');
+    const widest = Math.max(...items.map(el => el.offsetWidth)), avail = wheel.clientWidth;
+    if (widest > avail && avail > 0) wheel.style.setProperty('--fs', `${(ih * .74 * (avail / widest) * .97).toFixed(2)}px`);
+  };
   function frame(t = performance.now()) {
     raf = 0;
     /* time-based easing so the wheel feels identical on 60/120/144Hz screens */
@@ -226,6 +232,7 @@ function renderPicker(projects, L) {
   });
   addEventListener('resize', () => { measure(); kick(); });
   measure(); frame();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); kick(); });
 }
 
 function renderHome({ site, projects, maintainers, devices }) {
