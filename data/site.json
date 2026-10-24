@@ -1,0 +1,107 @@
+{
+  "name": "POX",
+  "subtitle": "we aim for stability under POX",
+  "logo": "assets/logo.svg",
+  "navigation": [
+    {
+      "label": "Home",
+      "target": "#home"
+    },
+    {
+      "label": "About Us",
+      "target": "#aboutus"
+    },
+    {
+      "label": "Devices",
+      "target": "#devices"
+    },
+    {
+      "label": "Projects",
+      "target": "#projects"
+    },
+    {
+      "label": "Maintainers",
+      "target": "#maintainers"
+    }
+  ],
+  "ctas": {
+    "request": {
+      "label": "Request",
+      "url": "request.html"
+    },
+    "donation": {
+      "label": "Donation",
+      "url": "https://opencollective.com/pox-project"
+    }
+  },
+  "about": {
+    "storyLiner": "Born from frustration with bloated, unstable custom builds, POX started with a single philosophy: strip away the noise and engineer rock-solid daily reliability. Every kernel patch, system service, and device tree in the POX ecosystem is audited for thermal efficiency, battery longevity, and zero-crash uptime."
+  },
+  "labels": {
+    "projectPage": "Page",
+    "back": "\u2190 Projects",
+    "github": "GitHub",
+    "phones": "Supported Phones",
+    "tutorial": "Tutorial Step by Step",
+    "notFound": "Project not found.",
+    "features": "Features",
+    "screenshots": "Screenshots"
+  },
+  "footer": {
+    "note": "Built for stability."
+  },
+  "request": {
+    "title": "Request",
+    "subtitle": "Tell us which device or feature you want next. We read every request.",
+    "submitLabel": "Send request",
+    "successText": "Opening your request...",
+    "errorText": "Please fill the required fields.",
+    "submit": {
+      "type": "github-issue",
+      "url": "https://github.com/pox-project/requests/issues/new",
+      "to": "requests@pox-project.org",
+      "titlePrefix": "[Request]"
+    },
+    "fields": [
+      {
+        "id": "name",
+        "label": "Your name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "contact",
+        "label": "Contact (email or telegram)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "project",
+        "label": "Project",
+        "type": "select",
+        "optionsFrom": "projects",
+        "extraOptions": [
+          "Something else"
+        ],
+        "required": true,
+        "inTitle": true
+      },
+      {
+        "id": "device",
+        "label": "Device name & codename",
+        "type": "text",
+        "required": true,
+        "inTitle": true
+      },
+      {
+        "id": "message",
+        "label": "Details",
+        "type": "textarea",
+        "required": false
+      }
+    ]
+  },
+  "picker": {
+    "minProjects": 5
+  }
+}

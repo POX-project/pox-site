@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>POX</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home" data-theme="indigo">
+<div class="pblur" aria-hidden="true"><i class="tint"></i><i></i><i></i><i></i><i></i><i></i></div>
+<header class="header" id="header">
+  <nav class="nav">
+    <a class="brand" id="brand" href="#home"><img id="logo" alt="POX logo"><span id="brandName">POX</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="links" aria-label="Open navigation">Menu <span aria-hidden="true">+</span></button>
+        <div class="links" id="links"></div>
+    <div class="ctas">
+      <a class="btn req" id="ctaRequest"></a>
+      <a class="btn don" id="ctaDonation"></a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="slide hero" id="home" data-theme="indigo">
+    <div class="hero-inner" id="heroInner">
+      <h1 class="title" id="title" aria-label="POX"></h1>
+      <p class="sub" id="subtitle"></p>
+    </div>
+  </section>
+
+  <section class="slide" id="aboutus" data-theme="light">
+    <div class="wrap"><p class="story" id="story"></p></div>
+  </section>
+
+  <section class="slide" id="devices" data-theme="light" aria-labelledby="devicesTitle">
+    <div class="wrap" id="devicesWrap"></div>
+  </section>
+
+  <section class="slide" id="projects" data-theme="indigo">
+    <div class="wrap" id="projectsWrap"></div>
+  </section>
+
+  <section class="slide" id="maintainers" data-theme="mint">
+    <div class="wrap"><div class="section-head rv"><p class="eyebrow">The people behind POX</p><h2>Our maintainers.</h2><p>Meet the people keeping the project moving.</p></div><div class="mlist" id="mlist"></div></div>
+  </section>
+</main>
+
+<footer class="footer" id="footer" data-theme="indigo"></footer>
+<script src="js/app.js"></script>
+</body>
+</html>

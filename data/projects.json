@@ -1,0 +1,314 @@
+[
+  {
+    "id": "pox-os",
+    "name": "POX OS",
+    "description": "POX OS is our core operating system built on clean AOSP sources with curated stability patches, strict background memory management, and zero unnecessary bloatware.",
+    "github": "https://github.com/pox-project/pox-os",
+    "supportedPhones": [
+      "Google Pixel 8 Pro (husky)",
+      "Google Pixel 7a (lynx)",
+      "Xiaomi POCO F5 (marble)",
+      "OnePlus 11 (salami)",
+      "Nothing Phone (2) (pong)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Unlock Bootloader & Backup Data",
+        "instruction": "Enable Developer Options and OEM Unlocking in Android Settings. Backup your files, reboot into fastboot mode, and unlock the bootloader.",
+        "command": "fastboot flashing unlock"
+      },
+      {
+        "step": "02",
+        "title": "Flash POX Recovery Image",
+        "instruction": "Download the verified POX Recovery image matching your phone codename and flash it via fastboot.",
+        "command": "fastboot flash boot pox_recovery.img"
+      },
+      {
+        "step": "03",
+        "title": "Format Data & Boot to Recovery",
+        "instruction": "Reboot into POX Recovery and select Format Data / Factory Reset to remove previous encryption.",
+        "command": "fastboot reboot recovery"
+      },
+      {
+        "step": "04",
+        "title": "Sideload POX OS Release Package",
+        "instruction": "Select Apply Update -> Apply from ADB in recovery, then sideload the signed POX OS zip package.",
+        "command": "adb sideload pox-os-stable-ota.zip"
+      }
+    ],
+    "image": "assets/projects/pox-os/cover.svg",
+    "features": [
+      {
+        "title": "Clean AOSP base",
+        "text": "Stays close to upstream with only curated patches, so updates stay predictable."
+      },
+      {
+        "title": "Strict memory control",
+        "text": "Background processes are capped to keep the phone smooth after days of uptime."
+      },
+      {
+        "title": "Zero bloatware",
+        "text": "No preinstalled extras. You decide what goes on your phone."
+      }
+    ],
+    "screenshots": [
+      "assets/projects/pox-os/shot1.svg",
+      "assets/projects/pox-os/shot2.svg",
+      "assets/projects/pox-os/shot3.svg"
+    ]
+  },
+  {
+    "id": "pox-kernel",
+    "name": "POX KERNEL",
+    "description": "An upstreamed, LTO-optimized Linux kernel featuring custom energy scheduling, reduced idle drain, and consistent frame pacing under sustained load.",
+    "github": "https://github.com/pox-project/pox-kernel",
+    "supportedPhones": [
+      "Xiaomi POCO F5 (marble)",
+      "Xiaomi POCO F4 (munch)",
+      "Xiaomi POCO F3 (alioth)",
+      "OnePlus 9RT (martini)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Verify Current Firmware Base",
+        "instruction": "Ensure your device is running a compatible Android version and vendor partition before flashing POX Kernel.",
+        "command": "adb shell uname -r"
+      },
+      {
+        "step": "02",
+        "title": "Reboot to Recovery",
+        "instruction": "Connect your phone via USB and reboot into recovery mode.",
+        "command": "adb reboot recovery"
+      },
+      {
+        "step": "03",
+        "title": "Sideload POX Kernel Zip",
+        "instruction": "Flash the signed POX Kernel AnyKernel3 archive via ADB sideload.",
+        "command": "adb sideload pox-kernel-stable-ak3.zip"
+      }
+    ],
+    "image": "assets/projects/pox-kernel/cover.svg",
+    "features": [
+      {
+        "title": "LTO optimized",
+        "text": "Link time optimization gives faster and smaller builds."
+      },
+      {
+        "title": "Energy aware scheduling",
+        "text": "Lower idle drain with consistent frame pacing under load."
+      },
+      {
+        "title": "Upstream first",
+        "text": "Regular merges from the latest stable Linux releases."
+      }
+    ],
+    "screenshots": [
+      "assets/projects/pox-kernel/shot1.svg",
+      "assets/projects/pox-kernel/shot2.svg",
+      "assets/projects/pox-kernel/shot3.svg"
+    ]
+  },
+  {
+    "id": "pox-recovery",
+    "name": "POX RECOVERY",
+    "description": "A minimalist recovery environment engineered for seamless OTA updates, fast ADB sideloading, and reliable decryption across modern partitions.",
+    "github": "https://github.com/pox-project/pox-recovery",
+    "supportedPhones": [
+      "Google Pixel 8 / 8 Pro (shiba / husky)",
+      "Nothing Phone (1) & (2) (spacewar / pong)",
+      "Xiaomi Redmi K60 / POCO F5 Pro (mondrian)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Enter Fastboot Mode",
+        "instruction": "Power off your device and hold Volume Down + Power until the Fastboot screen appears.",
+        "command": "fastboot devices"
+      },
+      {
+        "step": "02",
+        "title": "Flash Recovery Partition",
+        "instruction": "Flash the POX Recovery image to the recovery or vendor_boot partition.",
+        "command": "fastboot flash recovery pox-recovery-stable.img"
+      },
+      {
+        "step": "03",
+        "title": "Reboot into POX Recovery",
+        "instruction": "Boot directly into the recovery interface to verify installation.",
+        "command": "fastboot reboot recovery"
+      }
+    ],
+    "image": "assets/projects/pox-recovery/cover.svg",
+    "features": [
+      {
+        "title": "Fast sideload",
+        "text": "Flash updates over ADB without waiting on slow transfers."
+      },
+      {
+        "title": "Reliable decryption",
+        "text": "Works across modern partition layouts and encryption schemes."
+      },
+      {
+        "title": "Minimal interface",
+        "text": "Only what you need to install, back up and recover."
+      }
+    ],
+    "screenshots": [
+      "assets/projects/pox-recovery/shot1.svg",
+      "assets/projects/pox-recovery/shot2.svg",
+      "assets/projects/pox-recovery/shot3.svg"
+    ]
+  },
+  {
+    "id": "pox-guard",
+    "name": "POX GUARD",
+    "description": "System-level permission and background wakelock sentinel that blocks rogue processes and enforces strict firewall policies with zero overhead.",
+    "github": "https://github.com/pox-project/pox-guard",
+    "supportedPhones": [
+      "All POX OS Devices (arm64)",
+      "Google Pixel 6 / 7 / 8 Series",
+      "Snapdragon 8 Gen 1 / 2 / 3 Devices"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Verify Signed Package",
+        "instruction": "Fetch the verified POX Guard release package from the official GitHub repository.",
+        "command": "sha256sum pox-guard-release.apk"
+      },
+      {
+        "step": "02",
+        "title": "Install via ADB",
+        "instruction": "Install the package directly onto your device using ADB.",
+        "command": "adb install -r pox-guard-release.apk"
+      },
+      {
+        "step": "03",
+        "title": "Enable Background Stability Profile",
+        "instruction": "Grant background control permission and activate the default stability profile.",
+        "command": "adb shell cmd appops set com.pox.guard RUN_IN_BACKGROUND allow"
+      }
+    ],
+    "image": "assets/projects/pox-guard/cover.svg",
+    "features": [
+      {
+        "title": "Wakelock sentinel",
+        "text": "Detects and stops rogue background wakelocks before they drain the battery."
+      },
+      {
+        "title": "Firewall policies",
+        "text": "Per-app network rules enforced at system level."
+      },
+      {
+        "title": "Zero overhead",
+        "text": "Runs as a lightweight system service with no measurable cost."
+      }
+    ],
+    "screenshots": [
+      "assets/projects/pox-guard/shot1.svg",
+      "assets/projects/pox-guard/shot2.svg",
+      "assets/projects/pox-guard/shot3.svg"
+    ]
+  },
+  {
+    "id": "pox-camera",
+    "name": "POX CAMERA",
+    "description": "A lightweight camera app tuned for stable shots and fast startup on supported devices.",
+    "github": "https://github.com/pox-project/pox-camera",
+    "supportedPhones": [
+      "Google Pixel 8 Pro (husky)",
+      "Google Pixel 7a (lynx)",
+      "Xiaomi POCO F5 (marble)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Download the APK",
+        "instruction": "Grab the signed release from the GitHub releases page.",
+        "command": "sha256sum pox-camera-release.apk"
+      },
+      {
+        "step": "02",
+        "title": "Install via ADB",
+        "instruction": "Install the package with ADB.",
+        "command": "adb install -r pox-camera-release.apk"
+      },
+      {
+        "step": "03",
+        "title": "Grant permissions",
+        "instruction": "Open the app and allow camera and storage access."
+      }
+    ],
+    "image": "assets/projects/pox-camera/cover.svg",
+    "features": [
+      {
+        "title": "Fast startup",
+        "text": "Opens and is ready to shoot in under a second."
+      },
+      {
+        "title": "Stable processing",
+        "text": "Tuned pipelines that avoid crashes during long sessions."
+      },
+      {
+        "title": "Clean viewfinder",
+        "text": "No filters or overlays unless you turn them on."
+      }
+    ],
+    "screenshots": [
+      "assets/projects/pox-camera/shot1.svg",
+      "assets/projects/pox-camera/shot2.svg",
+      "assets/projects/pox-camera/shot3.svg"
+    ]
+  },
+  {
+    "id": "pox-launcher",
+    "name": "POX LAUNCHER",
+    "description": "A minimal launcher that keeps your home screen fast, quiet and out of the way.",
+    "github": "https://github.com/pox-project/pox-launcher",
+    "supportedPhones": [
+      "All POX OS Devices (arm64)",
+      "Google Pixel 6 / 7 / 8 Series"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Download the APK",
+        "instruction": "Get the latest release from GitHub.",
+        "command": "sha256sum pox-launcher-release.apk"
+      },
+      {
+        "step": "02",
+        "title": "Install via ADB",
+        "instruction": "Install the package with ADB.",
+        "command": "adb install -r pox-launcher-release.apk"
+      },
+      {
+        "step": "03",
+        "title": "Set as default",
+        "instruction": "Press Home and choose POX Launcher as your default launcher."
+      }
+    ],
+    "image": "assets/projects/pox-launcher/cover.svg",
+    "features": [
+      {
+        "title": "Quiet home screen",
+        "text": "No feeds, no suggestions, no notifications dots you did not ask for."
+      },
+      {
+        "title": "Instant search",
+        "text": "Find apps and settings as you type."
+      },
+      {
+        "title": "Light on memory",
+        "text": "Stays under a tiny memory budget in the background."
+      }
+    ],
+    "screenshots": [
+      "assets/projects/pox-launcher/shot1.svg",
+      "assets/projects/pox-launcher/shot2.svg",
+      "assets/projects/pox-launcher/shot3.svg"
+    ]
+  }
+]
