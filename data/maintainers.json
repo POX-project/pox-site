@@ -2,25 +2,37 @@
   {
     "name": "Maintainer 01 (Dummy)",
     "image": "assets/maintainers/m1.svg",
-        "description": "Sample bio: Works on device bring-up and keeping everyday builds dependable.",
-        "socials": []
+    "description": "Sample bio: Works on device bring-up and keeping everyday builds dependable.",
+    "socials": [
+      { "label": "GitHub", "url": "https://github.com/pox-project" },
+      { "label": "Telegram", "url": "https://t.me/" }
+    ]
   },
   {
     "name": "Maintainer 02 (Dummy)",
     "image": "assets/maintainers/m2.svg",
-        "description": "Sample bio: Focuses on kernel development, battery efficiency, and smooth performance.",
-        "socials": []
+    "description": "Sample bio: Focuses on kernel development, battery efficiency, and smooth performance.",
+    "socials": [
+      { "label": "GitHub", "url": "https://github.com/pox-project" },
+      { "label": "Twitter", "url": "https://twitter.com/" }
+    ]
   },
   {
     "name": "Maintainer 03 (Dummy)",
     "image": "assets/maintainers/m3.svg",
-        "description": "Sample bio: Helps test releases, investigate bugs, and improve the user experience.",
-        "socials": []
+    "description": "Sample bio: Helps test releases, investigate bugs, and improve the user experience.",
+    "socials": [
+      { "label": "GitHub", "url": "https://github.com/pox-project" },
+      { "label": "Instagram", "url": "https://instagram.com/" }
+    ]
   },
   {
     "name": "Maintainer 04 (Dummy)",
     "image": "assets/maintainers/m4.svg",
-        "description": "Sample bio: Looks after documentation, community feedback, and getting started guides.",
-        "socials": []
+    "description": "Sample bio: Looks after documentation, community feedback, and getting started guides.",
+    "socials": [
+      { "label": "GitHub", "url": "https://github.com/pox-project" },
+      { "label": "Website", "url": "https://pox-project.org" }
+    ]
   }
 ]

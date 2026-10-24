@@ -8,7 +8,7 @@ python3 -m http.server 8000
 
 ## Maintainer profiles
 
-Edit `data/maintainers.json`. Each profile accepts `name`, `image`, `description`, and an optional `socials` array. Existing names and bios are **sample content**; replace them with approved profiles before publishing.
+Edit `data/maintainers.json`. Each profile accepts `name`, `image`, `description`, and an optional `socials` array. Existing names, bios and social links are **sample placeholders** (the GitHub links point at the project org, the others at site home pages); replace them with each maintainer's approved profile before publishing.
 
 Each social link uses a `label` and an absolute `https://` (or `http://`) `url`. For example, this is the **shape of an example entry**, not an actual maintainer account:
 

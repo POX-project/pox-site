@@ -91,21 +91,38 @@ function renderChrome(site) {
 }
 
 /* ---------- devices ---------- */
-function renderDevices(devices) {
+/* A project supports a device when any supportedPhones entry contains the device name or its codename as a whole word. */
+function projectsForDevice(d, projects) {
+  const name = d.name.toLowerCase();
+  const code = new RegExp(`(^|[^a-z0-9])${d.codename.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z0-9]|$)`);
+  return projects.filter(p => (p.supportedPhones || []).some(s => { const t = s.toLowerCase(); return t.includes(name) || code.test(t); }));
+}
+
+function renderDevices(devices, projects) {
   const heading = home ? 'h2' : 'h1';
   $('#devicesWrap').innerHTML = `<div class="section-head rv">
     <p class="eyebrow">Built for your daily driver</p>
     <${heading} id="devicesTitle">Supported devices.</${heading}>
-    <p>Two devices. The same focus on stability. Find your device below.</p>
+    <p>Hover a device to see every POX project that supports it.</p>
     ${home ? '<a class="device-link" href="devices.html">Explore all devices <span aria-hidden="true">↗</span></a>' : ''}
   </div>
-  <div class="device-grid">${devices.map((d, i) => `<article class="device-card rv" style="--d:${i * .1}s">
-    <div class="device-top"><span class="device-number">${String(i + 1).padStart(2, '0')}</span><span class="device-status">Supported</span></div>
-    <div class="device-art" aria-hidden="true"><div class="device-phone"><div class="device-screen"></div><div class="device-camera"></div></div></div>
-    <div class="device-copy"><p class="device-maker">${esc(d.manufacturer)}</p><h3>${esc(d.name)}</h3><p class="device-code">${esc(d.codename)}</p>
-      <a class="device-link" href="request.html?device=${encodeURIComponent(d.name + ' (' + d.codename + ')')}">Ask about this device <span aria-hidden="true">↗</span></a>
-    </div>
-  </article>`).join('')}</div>`;
+  <div class="list">${devices.map((d, i) => {
+    const label = `${d.name} (${d.codename})`, found = projectsForDevice(d, projects);
+    return `<article class="row rv" style="--d:${i * .1}s" tabindex="0">
+      <span class="name">${esc(d.name)}</span>
+      <div class="reveal"><div class="rin"><div class="panel">
+        <div class="device-art" aria-hidden="true"><div class="device-phone"><div class="device-screen"></div><div class="device-camera"></div></div></div>
+        <div class="info">
+          <p class="device-meta"><span>Supported</span><span>${esc(d.manufacturer)}</span><span>${esc(d.codename)}</span></p>
+          <p class="k">${found.length ? `${found.length} POX project${found.length > 1 ? 's' : ''} for this device` : 'Projects for this device'}</p>
+          ${found.length
+            ? `<nav class="social-links" aria-label="Projects for ${esc(d.name)}">${found.map(p => `<a class="social-link" href="${projectUrl(p)}">${esc(p.name)} <span aria-hidden="true">→</span></a>`).join('')}</nav>`
+            : '<p class="device-empty">No project lists this device yet.</p>'}
+          <a class="device-link" href="request.html?device=${encodeURIComponent(label)}">Request a project for this device <span aria-hidden="true">↗</span></a>
+        </div>
+      </div></div></div>
+    </article>`;
+  }).join('')}</div>`;
 }
 
 /* ---------- home ---------- */
@@ -122,10 +139,6 @@ function renderRows(projects, L) {
         <a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a>
       </div></div></div>
     </article>`).join('')}</div>`;
-  $$('.row').forEach(row => row.addEventListener('click', e => {
-    if (e.target.closest('a')) return;
-    row.classList.toggle('open');
-  }));
 }
 
 /* 3D infinite wheel picker (used when there are many projects) */
@@ -221,16 +234,20 @@ function renderHome({ site, projects, maintainers, devices }) {
   const min = (site.picker && site.picker.minProjects) || 5;
   const usePicker = projects.length > min && !reduce && matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)').matches;
   if (usePicker) renderPicker(projects, site.labels); else renderRows(projects, site.labels);
-  renderDevices(devices);
+  renderDevices(devices, projects);
 
+  /* Maintainers: a strip of tall portraits with rotated names; the hovered one widens, the name straightens, and the profile appears. */
   $('#mlist').innerHTML = maintainers.map((m, i) => {
     const o = typeof m === 'string' ? { name: m } : m;
     const socials = (o.socials || []).map(s => ({ label: s.label, url: socialUrl(s.url) })).filter(s => s.label && s.url);
-    return `<article class="m rv" style="--d:${i * .08}s"><div class="mrow">${box(o.image, o.name, ini(o.name), 'mimg')}<div class="mcontent">
-      <h3 class="mname">${esc(o.name)}</h3>
-      ${o.description ? `<p class="mdesc">${esc(o.description)}</p>` : ''}
-      ${socials.length ? `<nav class="social-links" aria-label="${esc(o.name)} social links">${socials.map(s => `<a class="social-link" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(o.name)} on ${esc(s.label)} (opens in a new tab)">${esc(s.label)} <span aria-hidden="true">↗</span></a>`).join('')}</nav>` : ''}
-    </div></div></article>`;
+    return `<article class="mp rv" style="--d:${i * .08}s" tabindex="0" aria-label="${esc(o.name)}">
+      ${box(o.image, o.name, ini(o.name), 'mp-img')}
+      <div class="mp-body">
+        ${o.description ? `<p class="mdesc">${esc(o.description)}</p>` : ''}
+        ${socials.length ? `<nav class="social-links" aria-label="${esc(o.name)} social links">${socials.map(s => `<a class="social-link" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(o.name)} on ${esc(s.label)} (opens in a new tab)">${esc(s.label)} <span aria-hidden="true">↗</span></a>`).join('')}</nav>` : ''}
+      </div>
+      <h3 class="mp-name">${esc(o.name)}</h3>
+    </article>`;
   }).join('');
 }
 
@@ -406,8 +423,12 @@ function initMagnetic() {
       getJSON('data/site.json'), getJSON('data/projects.json'), getJSON('data/maintainers.json'), getJSON('data/devices.json')]);
     D = { site, projects, maintainers, devices };
     renderChrome(site);
-    if (home) renderHome(D); else if (page === 'project') renderProject(D); else if (page === 'devices') renderDevices(devices); else renderRequest(D);
+    if (home) renderHome(D); else if (page === 'project') renderProject(D); else if (page === 'devices') renderDevices(devices, projects); else renderRequest(D);
     watch();
+    document.addEventListener('click', e => {
+      const row = e.target.closest('.row');
+      if (row && !e.target.closest('a')) row.classList.toggle('open');
+    });
     initScroll();
     initMagnetic();
     if (home && location.hash.length > 1) {
