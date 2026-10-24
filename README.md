@@ -6,6 +6,20 @@ A static site with no build step or runtime dependencies. Serve the folder over 
 python3 -m http.server 8000
 ```
 
+## Deploying to Netlify
+
+`netlify.toml` builds into `dist/` (`node scripts/build.mjs`) and sets security and cache headers. **Never commit your API token**: it's ignored via `.gitignore` patterns for `.env*`, and should only be supplied through the environment or `netlify login`.
+
+Option A: connect the git repo in the Netlify dashboard (build command and publish directory are read from `netlify.toml`).
+
+Option B: CLI, using a personal access token from Netlify > User settings > Applications:
+
+```sh
+export NETLIFY_AUTH_TOKEN=<your token>          # or run: npx netlify login
+npx netlify-cli sites:create --name <site-name>  # first time only; or: npx netlify-cli link
+npx netlify-cli deploy --build --prod
+```
+
 ## Maintainer profiles
 
 Edit `data/maintainers.json`. Each profile accepts `name`, `image`, `description`, and an optional `socials` array. Existing names, bios and social links are **sample placeholders** (the GitHub links point at the project org, the others at site home pages); replace them with each maintainer's approved profile before publishing.

@@ -26,7 +26,7 @@ let D, words = [], ticking = false, lastWordCount = -1;
 const io = new IntersectionObserver(es => es.forEach(e => {
   if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
 }), { threshold: .15 });
-const watch = (root = document) => $$('.rv,.m', root).forEach(el => io.observe(el));
+const watch = (root = document) => $$('.rv', root).forEach(el => io.observe(el));
 const setTheme = t => { if (t && document.body.dataset.theme !== t) document.body.dataset.theme = t; };
 
 function type(el, text) {
@@ -158,12 +158,14 @@ function renderPicker(projects, L) {
     det.classList.remove('swap'); void det.offsetWidth; det.classList.add('swap');
   };
 
-  let pos = 0, target = 0, raf = 0, ih = 80, R = 200, cur = -1, detT, snapT, moved = 0;
+  let pos = 0, target = 0, raf = 0, lastF = 0, ih = 80, R = 200, cur = -1, detT, snapT, moved = 0;
   const mod = (a, n) => ((a % n) + n) % n;
   const measure = () => { ih = items[0].offsetHeight || 80; R = ih / (STEP * Math.PI / 180); };
-  function frame() {
+  function frame(t = performance.now()) {
     raf = 0;
-    pos += (target - pos) * .14;
+    /* time-based easing so the wheel feels identical on 60/120/144Hz screens */
+    const dt = lastF ? Math.max(0, Math.min(50, t - lastF)) : 16.67; lastF = t;
+    pos += (target - pos) * (1 - Math.pow(1 - .14, dt / 16.67));
     if (Math.abs(target - pos) < .0005) pos = target;
     items.forEach((el, i) => {
       let d = mod(i - pos, N); if (d > N / 2) d -= N;
@@ -178,12 +180,13 @@ function renderPicker(projects, L) {
     const idx = mod(Math.round(pos), N);
     wheel.setAttribute('aria-activedescendant', `project-option-${idx}`);
     if (idx !== cur) { cur = idx; clearTimeout(detT); detT = setTimeout(() => showDetail(cur), cur === 0 && !det.innerHTML ? 0 : 90); }
-    if (pos !== target) raf = requestAnimationFrame(frame);
+    if (pos !== target) raf = requestAnimationFrame(frame); else lastF = 0;
   }
   const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
   const snapLater = () => { clearTimeout(snapT); snapT = setTimeout(() => { target = Math.round(target); kick(); }, 140); };
 
   wheel.addEventListener('wheel', e => {
+    if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return; /* keep pinch-zoom and horizontal scroll working */
     e.preventDefault();
     const dy = e.deltaY * (e.deltaMode === 1 ? 16 : 1);
     target += Math.max(-1.5, Math.min(1.5, dy / (ih * 1.1)));
@@ -201,10 +204,14 @@ function renderPicker(projects, L) {
     drag.v = .8 * drag.v + .2 * (-dy / (ih * .95)) / dt;
     drag.lastY = e.clientY; drag.lastT = now; kick();
   });
-  addEventListener('pointerup', () => {
+  const endDrag = () => {
     if (!drag) return;
-    target = Math.round(target + drag.v * 180); drag = null; kick();
-  });
+    /* no fling if the pointer rested before release */
+    const v = performance.now() - drag.lastT > 100 ? 0 : drag.v;
+    target = Math.round(target + v * 180); drag = null; kick();
+  };
+  addEventListener('pointerup', endDrag);
+  addEventListener('pointercancel', endDrag);
 
   items.forEach((el, i) => el.addEventListener('click', () => {
     if (moved > 6) { moved = 0; return; }
@@ -381,7 +388,11 @@ function onScroll() {
     if (reduce) return;
     if (!home) {
       const c = $('.cover img');
-      if (c && matchMedia('(min-width: 901px)').matches) { const r = c.parentElement.getBoundingClientRect(); c.style.transform = `translateY(${((r.top + r.height / 2 - vh / 2) / vh) * -30}px)`; }
+      if (c && matchMedia('(min-width: 901px)').matches) {
+        const r = c.parentElement.getBoundingClientRect(), max = r.height * .06; /* image overhangs by 6% top and bottom */
+        const shift = Math.max(-max, Math.min(max, ((r.top + r.height / 2 - vh / 2) / vh) * -30));
+        c.style.transform = `translateY(${shift.toFixed(2)}px)`;
+      }
       return;
     }
     const p = Math.min(1, y / vh), hi = $('#heroInner');
@@ -405,6 +416,7 @@ function initScroll() {
   }), { rootMargin: '-50% 0px -50% 0px' });
   $$('[data-theme]:not(body)').forEach(s => so.observe(s));
   addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', () => { lastWordCount = -1; onScroll(); });
   onScroll();
 }
 
@@ -441,7 +453,7 @@ function initMagnetic() {
     initMagnetic();
     if (home && location.hash.length > 1) {
       const t = $(location.hash);
-      if (t) setTimeout(() => t.scrollIntoView({ behavior: 'auto' }), 30);
+      if (t) setTimeout(() => t.scrollIntoView({ behavior: 'instant' }), 30);
     }
   } catch (err) {
     console.error(err);

@@ -1,8 +1,7 @@
 :root{--navy:#030164;--light:#F5F7FD;--coral:#FF4B3E;--mint:#00E599;--ease:cubic-bezier(.16,1,.3,1)}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth;scroll-snap-type:y proximity;scroll-padding-top:110px}
-[id]{scroll-margin-top:110px}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity}
 :focus-visible{outline:2px solid currentColor;outline-offset:5px}
 button,a,input,select,textarea{touch-action:manipulation}
 body{
@@ -123,7 +122,7 @@ a{color:inherit;text-decoration:none}
 .mp:hover .ph.mp-img img,.mp:focus-visible .ph.mp-img img,.mp:has(a:focus-visible) .ph.mp-img img{filter:none;transform:scale(1)}
 .ph.mp-img .ph-i{font-size:clamp(5rem,14vw,11rem);opacity:.25}
 .mp-name{position:absolute;z-index:2;left:var(--pad);bottom:var(--pad);max-width:calc(100% - var(--pad)*2);font-size:clamp(1.4rem,2.8vw,2.6rem);font-weight:700;line-height:1.1;letter-spacing:-.04em;white-space:nowrap;transform-origin:0 100%;transform:translateX(1.1em) rotate(-90deg);transition:transform .85s var(--ease),color .4s}
-.mp:hover .mp-name,.mp:focus-visible .mp-name,.mp:has(a:focus-visible) .mp-name{transform:none;white-space:normal;color:var(--mint)}
+.mp:hover .mp-name,.mp:focus-visible .mp-name,.mp:has(a:focus-visible) .mp-name{transform:none;color:var(--mint)}
 .mp-body{position:absolute;z-index:2;left:var(--pad);right:var(--pad);bottom:calc(var(--pad) + 3.6rem);display:flex;flex-direction:column;gap:6px;max-width:560px;opacity:0;transform:translateY(18px);pointer-events:none;transition:opacity .3s,transform .5s var(--ease)}
 .mp:hover .mp-body,.mp:focus-visible .mp-body,.mp:has(a:focus-visible) .mp-body{opacity:1;transform:none;pointer-events:auto;transition:opacity .5s .3s,transform .7s var(--ease) .3s}
 .mp-body .social-link:hover{color:var(--mint)}
@@ -272,8 +271,7 @@ a{color:inherit;text-decoration:none}
 
 /* MOBILE: one blur surface, explicit navigation, and readable static rows. */
 @media(max-width:900px){
-  html{scroll-snap-type:none;scroll-padding-top:96px}
-  [id]{scroll-margin-top:96px}
+  html{scroll-snap-type:none}
   .slide{scroll-snap-align:none;padding-block:6.5rem 4rem;min-height:auto}
   .hero{min-height:100svh}
   .header,.header.scrolled{padding:12px 20px}
