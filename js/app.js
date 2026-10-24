@@ -150,6 +150,8 @@ function renderPicker(projects, L) {
     </div>
     <div class="pdetail" id="pdetail"></div></div>`;
   const wheel = $('#wheel'), det = $('#pdetail'), items = $$('.wi', wheel);
+  /* CSS sizes the font from the longest name's character count (monospace font), so names always fit */
+  wheel.style.setProperty('--chars', Math.max(...projects.map(p => [...p.name].length)));
   const showDetail = i => {
     const p = projects[i];
     det.innerHTML = `${box(p.image, p.name, ini(p.name), 'pimg')}<p class="pd-desc">${esc(p.description)}</p>
