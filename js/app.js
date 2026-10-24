@@ -228,6 +228,14 @@ function renderHome({ site, projects, maintainers, devices }) {
     `<span class="pox-letter" aria-hidden="true"><i style="--i:${i}">${esc(c)}</i></span>`).join('');
   type($('#subtitle'), site.subtitle);
 
+  /* Social links come from site.json; entries without a valid URL are skipped. */
+  const socials = (site.socials || []).map(s => ({ label: s.label, url: socialUrl(s.url || '') })).filter(s => s.label && s.url);
+  if (socials.length) {
+    const nav = $('#heroSocials');
+    nav.innerHTML = socials.map((s, i) => `<a class="hero-social" style="--i:${i}" href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(s.label)} (opens in a new tab)">${esc(s.label)} <span aria-hidden="true">↗</span></a>`).join('');
+    nav.hidden = false;
+  }
+
   $('#story').innerHTML = site.about.storyLiner.split(/\s+/).map(w => `<span class="w">${esc(w)}</span>`).join(' ');
   words = $$('.w');
 

@@ -37,6 +37,18 @@
   "about": {
     "storyLiner": "Born from frustration with bloated, unstable custom builds, POX started with a single philosophy: strip away the noise and engineer rock-solid daily reliability. Every kernel patch, system service, and device tree in the POX ecosystem is audited for thermal efficiency, battery longevity, and zero-crash uptime."
   },
+  "socials": [
+    { "label": "GitHub", "url": "https://github.com/pox-project" },
+    { "label": "Telegram", "url": "" },
+    { "label": "Twitter", "url": "" },
+    { "label": "Instagram", "url": "" },
+    { "label": "YouTube", "url": "" },
+    { "label": "Discord", "url": "" },
+    { "label": "Mastodon", "url": "" },
+    { "label": "Reddit", "url": "" },
+    { "label": "LinkedIn", "url": "" },
+    { "label": "Open Collective", "url": "https://opencollective.com/pox-project" }
+  ],
   "labels": {
     "projectPage": "Page",
     "back": "\u2190 Projects",
