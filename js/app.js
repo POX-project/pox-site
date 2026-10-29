@@ -125,13 +125,20 @@ function renderChrome(site) {
 
 /* ---------- devices ---------- */
 function projectsForDevice(d, projects) {
+  const isGeneric = d.codename === 'generic' || d.name.toLowerCase().includes('generic');
+  if (isGeneric) {
+    return projects.filter(p => (p.supportedPhones || []).some(s => {
+      const t = s.toLowerCase();
+      return t.includes('generic') || t.includes('any android') || t.includes('all android') || t.includes('universal');
+    }));
+  }
   const name = d.name.toLowerCase();
   const code = new RegExp(`(^|[^a-z0-9])${d.codename.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z0-9]|$)`);
-  const isGeneric = d.codename === 'generic' || name.includes('generic');
   return projects.filter(p => (p.supportedPhones || []).some(s => {
     const t = s.toLowerCase();
-    if (isGeneric && (t.includes('generic') || t.includes('any android') || t.includes('all android') || t.includes('universal'))) {
-      return true;
+    // Hardware devices only list their specific projects, never generic ones
+    if (t.includes('generic') || t.includes('any android') || t.includes('all android') || t.includes('universal')) {
+      return false;
     }
     return t.includes(name) || code.test(t);
   }));
@@ -139,13 +146,7 @@ function projectsForDevice(d, projects) {
 
 function renderDevices(devices, projects) {
   const heading = home ? 'h2' : 'h1';
-  $('#devicesWrap').innerHTML = `<div class="section-head rv">
-    <p class="eyebrow">Built for your daily driver</p>
-    <${heading} id="devicesTitle">Supported devices.</${heading}>
-    <p>Hover a device to see every POX project that supports it.</p>
-    ${home ? '<a class="device-link" href="devices.html">Explore all devices <span aria-hidden="true">↗</span></a>' : ''}
-  </div>
-  <div class="list">${devices.map((d, i) => {
+  const renderList = devs => devs.map((d, i) => {
     const label = `${d.name} (${d.codename})`, found = projectsForDevice(d, projects);
     return `<article class="row rv" style="--d:${i * .1}s" tabindex="0">
       <span class="name">${esc(d.name)}</span>
@@ -161,7 +162,40 @@ function renderDevices(devices, projects) {
         </div>
       </div></div></div>
     </article>`;
-  }).join('')}</div>`;
+  }).join('');
+
+  $('#devicesWrap').innerHTML = `<div class="section-head rv">
+    <p class="eyebrow">Built for your daily driver</p>
+    <${heading} id="devicesTitle">Supported devices.</${heading}>
+    <p>Hover a device to see every POX project that supports it.</p>
+    ${home ? '<a class="device-link" href="devices.html">Explore all devices <span aria-hidden="true">↗</span></a>' : ''}
+  </div>
+  <div class="dev-filter-bar rv" id="devFilterBar">
+    <button class="pj-filter-btn active" type="button" data-dev="all">All Devices (${devices.length})</button>
+    <button class="pj-filter-btn" type="button" data-dev="specific">Device-Specific</button>
+    <button class="pj-filter-btn" type="button" data-dev="generic">Generic (Universal)</button>
+    <button class="pj-filter-btn" type="button" data-dev="begonia">Xiaomi (begonia)</button>
+    <button class="pj-filter-btn" type="button" data-dev="m20lte">Samsung (m20lte)</button>
+  </div>
+  <div class="list" id="devicesList">${renderList(devices)}</div>`;
+
+  const filterBar = $('#devFilterBar'), listEl = $('#devicesList');
+  if (filterBar && listEl) {
+    filterBar.addEventListener('click', e => {
+      const btn = e.target.closest('.pj-filter-btn');
+      if (!btn) return;
+      $$('.pj-filter-btn', filterBar).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.dev;
+      let filtered = devices;
+      if (f === 'specific') filtered = devices.filter(d => d.codename !== 'generic');
+      else if (f === 'generic') filtered = devices.filter(d => d.codename === 'generic');
+      else if (f === 'begonia') filtered = devices.filter(d => d.codename === 'begonia');
+      else if (f === 'm20lte') filtered = devices.filter(d => d.codename === 'm20lte');
+      listEl.innerHTML = renderList(filtered);
+      watch(listEl);
+    });
+  }
 }
 
 /* ---------- home ---------- */
@@ -422,8 +456,23 @@ function renderProjectsPage({ site, projects, maintainers }) {
             <span class="pj-badge" id="pjCount">${projects.length}</span>
           </div>
         </div>
-        <div class="pj-filter-bar rv" id="pjFilterBar">
-          ${categories.map((c, i) => `<button class="pj-filter-btn${i === 0 ? ' active' : ''}" type="button" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
+        <div class="pj-filters-wrap rv" id="pjFiltersWrap">
+          <div class="pj-filter-group">
+            <span class="pj-filter-label">Filter Device:</span>
+            <div class="pj-filter-bar" id="pjDeviceFilterBar">
+              <button class="pj-filter-btn active" type="button" data-device="all">All Devices</button>
+              <button class="pj-filter-btn" type="button" data-device="specific">Device-Specific</button>
+              <button class="pj-filter-btn" type="button" data-device="generic">Generic (Universal)</button>
+              <button class="pj-filter-btn" type="button" data-device="begonia">Xiaomi (begonia)</button>
+              <button class="pj-filter-btn" type="button" data-device="m20lte">Samsung (m20lte)</button>
+            </div>
+          </div>
+          <div class="pj-filter-group">
+            <span class="pj-filter-label">Filter Category:</span>
+            <div class="pj-filter-bar" id="pjCatFilterBar">
+              ${categories.map((c, i) => `<button class="pj-filter-btn${i === 0 ? ' active' : ''}" type="button" data-cat="${esc(c)}">${esc(c === 'All' ? 'All Categories' : c)}</button>`).join('')}
+            </div>
+          </div>
         </div>
         <div class="pj-grid" id="pjGrid">
           ${projects.map(p => renderItem(p, false)).join('')}
@@ -454,18 +503,56 @@ function renderProjectsPage({ site, projects, maintainers }) {
   enableDrag($('#scrollerFeatured'));
   enableDrag($('#scrollerLatest'));
 
-  const filterBar = $('#pjFilterBar'), grid = $('#pjGrid'), countEl = $('#pjCount');
-  if (filterBar && grid) {
-    filterBar.addEventListener('click', e => {
+  const devBar = $('#pjDeviceFilterBar'), catBar = $('#pjCatFilterBar'), grid = $('#pjGrid'), countEl = $('#pjCount');
+  let currentDeviceScope = 'all';
+  let currentCategory = 'All';
+
+  function applyFilters() {
+    const list = projects.filter(p => {
+      const isGeneric = (p.supportedPhones || []).some(s => {
+        const t = s.toLowerCase();
+        return t.includes('generic') || t.includes('any android') || t.includes('all android') || t.includes('universal');
+      });
+      if (currentDeviceScope === 'generic' && !isGeneric) return false;
+      if (currentDeviceScope === 'specific' && isGeneric) return false;
+      if (currentDeviceScope === 'begonia') {
+        const match = (p.supportedPhones || []).some(s => s.toLowerCase().includes('begonia'));
+        if (!match) return false;
+      }
+      if (currentDeviceScope === 'm20lte') {
+        const match = (p.supportedPhones || []).some(s => s.toLowerCase().includes('m20lte') || s.toLowerCase().includes('m20'));
+        if (!match) return false;
+      }
+      if (currentCategory !== 'All' && p.category !== currentCategory) return false;
+      return true;
+    });
+
+    grid.innerHTML = list.length
+      ? list.map(p => renderItem(p, false)).join('')
+      : '<div class="pj-empty"><p>No projects match the selected filters.</p></div>';
+    if (countEl) countEl.textContent = list.length;
+    watch(grid);
+  }
+
+  if (devBar) {
+    devBar.addEventListener('click', e => {
       const btn = e.target.closest('.pj-filter-btn');
       if (!btn) return;
-      $$('.pj-filter-btn', filterBar).forEach(b => b.classList.remove('active'));
+      $$('.pj-filter-btn', devBar).forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      const cat = btn.dataset.cat;
-      const list = cat === 'All' ? projects : projects.filter(p => p.category === cat);
-      grid.innerHTML = list.map(p => renderItem(p, false)).join('');
-      if (countEl) countEl.textContent = list.length;
-      watch(grid);
+      currentDeviceScope = btn.dataset.device;
+      applyFilters();
+    });
+  }
+
+  if (catBar) {
+    catBar.addEventListener('click', e => {
+      const btn = e.target.closest('.pj-filter-btn');
+      if (!btn) return;
+      $$('.pj-filter-btn', catBar).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = btn.dataset.cat;
+      applyFilters();
     });
   }
 }

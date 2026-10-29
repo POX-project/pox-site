@@ -2,7 +2,7 @@
   {
     "id": "pox-begonia-kernel",
     "name": "POX Begonia Kernel",
-    "description": "An advanced custom Linux kernel engineered for Xiaomi Redmi Note 8 Pro (begonia / MT6785 / Helio G90T) focused on daily-driver stability, thermal efficiency, and battery longevity.",
+    "description": "An advanced custom Linux kernel engineered for Xiaomi Redmi Note 8 Pro (begonia / begoniain / MT6785 / Helio G90T) focused on daily-driver stability, thermal efficiency, zero EL1 aborts, and battery longevity.",
     "github": "https://github.com/POX-project/pox-begonia-kernel",
     "supportedPhones": [
       "Redmi Note 8 Pro (begonia)",
@@ -11,14 +11,14 @@
     "tutorial": [
       {
         "step": "01",
-        "title": "Verify Firmware & Recovery",
-        "instruction": "Ensure your device is running a compatible Android base and custom recovery (TWRP, OrangeFox, PBRP, or SHRP).",
+        "title": "Verify Firmware & Custom Recovery",
+        "instruction": "Ensure your device has an unlocked bootloader and a compatible custom recovery (TWRP, OrangeFox, PBRP, or SHRP).",
         "command": "adb reboot recovery"
       },
       {
         "step": "02",
         "title": "Backup Existing Boot Partition",
-        "instruction": "Take a full nandroid backup of your current boot/kernel partition in recovery before flashing."
+        "instruction": "Take a complete nandroid backup of your current boot/kernel partition in recovery before flashing."
       },
       {
         "step": "03",
@@ -36,26 +36,30 @@
     "image": "assets/projects/pox-begonia-kernel/cover.png",
     "features": [
       {
-        "title": "Rock Editions Matrix",
-        "text": "Curated branch matrix (Granite, Obsidian, Onyx) built on upstreamed Linux 4.14 stable LTS."
+        "title": "Rock Editions Matrix (Granite, Obsidian, Onyx)",
+        "text": "Curated stability branches built on upstreamed Linux 4.14 stable LTS with optimized Energy-Aware Scheduling (EAS)."
       },
       {
-        "title": "Multi-Root Support",
-        "text": "Native builds with integrated KernelSU-Next, APatch, Sultan debloat, and Magisk compatibility."
+        "title": "Multi-Root & Debloat",
+        "text": "Native builds with Sultan debloat, KernelSU-Next v2.3.0, APatch, and Magisk root compatibility."
       },
       {
-        "title": "Zero Frame-Drop Engine",
-        "text": "Tuned energy-aware scheduling, optimized thermal profiles, and 240Hz touch gaming debounce."
+        "title": "Zero Frame-Drop Engine & 240Hz Debounce",
+        "text": "Tuned CPU governors, optimized thermal profiles, and 240Hz touch gaming debounce for stutter-free gaming."
+      },
+      {
+        "title": "Hardware Protection & Fast Charge",
+        "text": "Clamped 500mA PC USB port protection against ADB disconnect loops, paired with PE+ 2.0 18W fast charging on AC."
       }
     ],
     "screenshots": [],
-    "version": "v1.0.1-Beta",
+    "version": "v2.0.0",
     "changelog": [
       {
-        "version": "v1.0.1-Beta",
+        "version": "v2.0.0",
         "date": "October 2026",
-        "title": "Mainline Release with Sultan Debloat, KernelSU-Next & Safe USB 500mA Charging",
-        "summary": "Major stability and performance release featuring Xiaomi Power HAL panic immunization, zero-overhead storage scheduler, and upstream KernelSU-Next legacy driver.",
+        "title": "Rock Edition Onyx Production Release (Linux 4.14.357)",
+        "summary": "Major stable production release featuring Sultan debloat, KernelSU-Next v2.3.0, Xiaomi Power HAL panic immunization, and safe 500mA PC charging protection.",
         "changes": [
           "Zero EL1 Aborts: Resolved Xiaomi Power HAL NodeLooperThread fatal panic by preserving sysctl_sched_migration_cost as writable in .data.",
           "Storage I/O Optimization: Default UFS block storage scheduler tuned to zero-overhead noop for flash memory.",
@@ -67,14 +71,109 @@
         ]
       },
       {
-        "version": "v1.0.0-Beta",
+        "version": "v1.0.1-Beta",
         "date": "October 2026",
-        "title": "Initial Mainline Public Beta Release",
-        "summary": "Public beta bringup establishing the Rock Editions kernel matrix on upstreamed Linux 4.14 LTS.",
+        "title": "Mainline Release with Sultan Debloat, KernelSU-Next & Safe USB 500mA Charging",
+        "summary": "Public beta release establishing the Rock Editions kernel matrix on upstreamed Linux 4.14 LTS.",
         "changes": [
           "Initial Rock Editions matrix release (Granite, Obsidian, Onyx) for Redmi Note 8 Pro.",
           "Integrated multi-root support with APatch, KernelSU-Next, and Magisk compatibility.",
           "Embedded FolkPatch auto-installer inside flashable recovery AnyKernel3 packages."
+        ]
+      },
+      {
+        "version": "v1.0.0-Beta",
+        "date": "October 2026",
+        "title": "Initial Mainline Public Beta Release",
+        "summary": "Initial kernel bringup establishing custom EAS scheduling.",
+        "changes": [
+          "Initial public beta release for MediaTek MT6785 / Helio G90T.",
+          "Bringup of custom EAS governors and touch drivers."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav"
+    ],
+    "featured": true,
+    "category": "Kernel"
+  },
+  {
+    "id": "pox-m20lte-kernel",
+    "name": "POX M20lte Kernel",
+    "description": "An advanced custom Linux kernel engineered for Samsung Galaxy M20 (m20lte / universal7885 / Exynos 7885) focused on daily-driver performance, deep sleep battery longevity, and modern root solution support.",
+    "github": "https://github.com/POX-project/pox-m20lte-kernel",
+    "supportedPhones": [
+      "Galaxy M20 (m20lte)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Verify Custom Recovery",
+        "instruction": "Ensure your Samsung Galaxy M20 is running an unlocked bootloader with TWRP or OrangeFox recovery installed.",
+        "command": "adb reboot recovery"
+      },
+      {
+        "step": "02",
+        "title": "Backup Boot & DTBO Partitions",
+        "instruction": "Create a backup of your stock boot and dtbo partitions in recovery before proceeding."
+      },
+      {
+        "step": "03",
+        "title": "Flash Kernel AnyKernel3 Zip",
+        "instruction": "Flash the Pox M20lte Kernel AnyKernel3 zip via recovery install or ADB sideload.",
+        "command": "adb sideload pox-kernel-m20lte-onyx.zip"
+      },
+      {
+        "step": "04",
+        "title": "Reboot System",
+        "instruction": "Reboot to system and enjoy smooth performance and extended deep sleep battery life.",
+        "command": "adb reboot"
+      }
+    ],
+    "image": "assets/projects/pox-m20lte-kernel/cover.png",
+    "features": [
+      {
+        "title": "Exynos 7885 Tuning",
+        "text": "Custom big.LITTLE scheduler tuning specifically calibrated for Exynos 7885 dual A73 and hexa A53 cores."
+      },
+      {
+        "title": "Onyx Edition Stability",
+        "text": "Production stability branch bringing deep sleep wakelock governor and zero-overhead flash storage scheduler."
+      },
+      {
+        "title": "Multi-Root Ready",
+        "text": "Built-in KernelSU-Next in-tree driver support alongside APatch and Magisk compatibility."
+      },
+      {
+        "title": "Thermal & Battery Balance",
+        "text": "Eliminates modem wakelock battery drain while sustaining smooth multitasking on custom OneUI and AOSP ROMs."
+      }
+    ],
+    "screenshots": [],
+    "version": "v2.0.0",
+    "changelog": [
+      {
+        "version": "v2.0.0",
+        "date": "October 2026",
+        "title": "Onyx Production Stable Release for Samsung Galaxy M20",
+        "summary": "Major stable release bringing full universal7885 platform optimizations, deep sleep wakelock governor, and KernelSU support.",
+        "changes": [
+          "Production bringup of Onyx branch for Samsung Galaxy M20 (m20lte / universal7885).",
+          "Integrated KernelSU-Next in-tree driver with safe SELinux hook emulation.",
+          "Fixed deep sleep battery drain by pruning runaway Exynos modem wakelocks.",
+          "Upstreamed Linux energy-aware scheduler (EAS) tuning for Exynos 7885 big.LITTLE cluster.",
+          "Default I/O block scheduler configured to noop flash optimization."
+        ]
+      },
+      {
+        "version": "v2.0",
+        "date": "October 2026",
+        "title": "Initial M20lte Bringup",
+        "summary": "Initial port and test bringup on Exynos 7885.",
+        "changes": [
+          "Initial bringup for Samsung Galaxy M20.",
+          "Standard AnyKernel3 recovery packaging support."
         ]
       }
     ],
@@ -87,70 +186,72 @@
   {
     "id": "pox-kernel-manager",
     "name": "POX Kernel Manager",
-    "description": "The official companion Android application for Pox Kernel on Redmi Note 8 Pro, built with pure Jetpack Compose, Kotlin Coroutines, and Material 3 Expressive guidelines.",
+    "description": "The official native companion Android application for Pox Kernel on Redmi Note 8 Pro (begonia / MT6785), built with pure Jetpack Compose, Kotlin Coroutines, and Material 3 Expressive guidelines.",
     "github": "https://github.com/POX-project/pox-kernel-manager",
     "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "All POX Kernel Devices"
+      "Redmi Note 8 Pro (begonia)"
     ],
     "tutorial": [
       {
         "step": "01",
         "title": "Download APK Release",
-        "instruction": "Download the latest verified Pox Kernel Manager APK release from the official repository.",
-        "command": "sha256sum pox-kernel-manager.apk"
+        "instruction": "Download the latest Pox Kernel Manager APK from the GitHub releases page.",
+        "command": "adb install pox-kernel-manager-v2.0.0.apk"
       },
       {
         "step": "02",
-        "title": "Install via ADB or Device",
-        "instruction": "Install the application directly onto your Android device using ADB.",
-        "command": "adb install -r pox-kernel-manager.apk"
+        "title": "Grant Permissions & Optional Root",
+        "instruction": "Launch the application. If your device is rooted with KernelSU, APatch, or Magisk, grant root permissions. On unrooted devices, the app continues with non-root sensor telemetry."
       },
       {
         "step": "03",
-        "title": "Grant Permissions",
-        "instruction": "Open the app and grant Superuser access when prompted for direct kernel sysfs tuning (or run in rootless telemetry mode)."
+        "title": "Select Tuning Profile",
+        "instruction": "Choose your desired profile (Balanced, Gaming, or Battery Saver) and manage custom CPU governor parameters."
       }
     ],
     "image": "assets/projects/pox-kernel-manager/cover.png",
     "features": [
       {
-        "title": "Hardware & Battery Telemetry",
-        "text": "Real-time battery voltage, current, CPU core cluster frequencies, and Mali-G76 GPU load."
+        "title": "Dual Mode Operation",
+        "text": "Seamless execution on both rooted devices (KernelSU-Next, APatch, Magisk) and unrooted setups without freezing or hanging."
       },
       {
-        "title": "Unified Gaming Mode",
-        "text": "Gaming mode toggles, direct-power bypass charging, and touch debounce driver controllers."
+        "title": "Material 3 Expressive UI",
+        "text": "Engineered entirely in pure Jetpack Compose following the latest Google Material 3 Expressive design language."
       },
       {
-        "title": "Dual Mode Architecture",
-        "text": "Operates seamlessly on rooted devices (KernelSU, APatch, Magisk) and clean unrooted ROMs without hanging."
+        "title": "Live Hardware Telemetry",
+        "text": "Real-time CPU cluster frequency monitors, live battery thermal gauges, GPU load meters, and memory usage."
+      },
+      {
+        "title": "OTA & AnyKernel3 Flasher",
+        "text": "Integrated AnyKernel3 flash utility to update Pox Kernel directly from Android with SHA-256 verification."
       }
     ],
     "screenshots": [],
-    "version": "v1.2.2",
+    "version": "v2.0.0",
     "changelog": [
       {
-        "version": "v1.2.2",
+        "version": "v2.0.0",
         "date": "October 2026",
-        "title": "Thermal Telemetry & M3 Expressive Polish",
-        "summary": "Maintenance release improving real-time frequency monitors and Sultan debloat controls.",
+        "title": "Major v2.0 Overhaul with Material 3 Expressive & MT6785 Tuning Controls",
+        "summary": "Complete redesign featuring rootless fallback, thermal profile switching, and live hardware sensor dashboards.",
         "changes": [
-          "Live CPU and GPU frequency telemetry per cluster with real-time utilization graphs.",
-          "One-tap toggle for Sultan Debloat governor and energy-aware scheduler modes.",
-          "Charging rate diagnostics showing live mA, mV, battery health, and thermal sensor readouts.",
-          "Updated dark glassmorphic interface to Material 3 Expressive guidelines."
+          "Overhauled user interface following Google Material 3 Expressive guidelines with dynamic color palettes.",
+          "Dual Mode operation: full hardware control when rooted (KernelSU/APatch/Magisk) with seamless rootless state persistence.",
+          "Added quick profile switcher for Gaming, Balanced, and Battery Saver modes.",
+          "Live hardware monitoring: cluster frequencies, battery thermals, and GPU load.",
+          "Automated AnyKernel3 update notification and OTA integrity check."
         ]
       },
       {
-        "version": "v1.2.0",
+        "version": "v1.2.2",
         "date": "October 2026",
-        "title": "Jetpack Compose 1.7 Modernization",
-        "summary": "Under-the-hood rewrite in pure Kotlin Coroutines and StateFlow.",
+        "title": "Companion Maintenance Release",
+        "summary": "Stability improvements and battery telemetry enhancements.",
         "changes": [
-          "Root shell executor rewritten with KernelSU, APatch, and Magisk autodetection.",
-          "Reduced background memory footprint to under 18MB with zero wakelocks."
+          "Improved battery health and charging status readout accuracy.",
+          "Resolved an intermittent root detection race condition on KernelSU-Next."
         ]
       }
     ],
@@ -159,48 +260,47 @@
       "methylphetamine"
     ],
     "featured": true,
-    "category": "App"
+    "category": "Tools"
   },
   {
     "id": "begotorch",
     "name": "Begoker Torch",
-    "description": "Native Android Quick Settings Tile and in-shade non-collapsing intensity slider extension for Begoker Kernel flashlight driver on Redmi Note 8 Pro.",
+    "description": "A native Android system extension providing an AOSP Quick Settings Tile and an in-shade intensity slider for Redmi Note 8 Pro running Begoker Kernel (MT6785 / MT6360).",
     "github": "https://github.com/POX-project/begotorch",
     "supportedPhones": [
-      "Redmi Note 8 Pro (begonia)",
-      "Devices with Begoker Kernel"
+      "Redmi Note 8 Pro (begonia)"
     ],
     "tutorial": [
       {
         "step": "01",
-        "title": "Download Begoker Torch APK",
-        "instruction": "Get the signed release APK from GitHub Releases or package it from source.",
-        "command": "adb install -r begotorch.apk"
+        "title": "Install Begotorch APK",
+        "instruction": "Download and install the APK on your Redmi Note 8 Pro running Pox / Begoker Kernel.",
+        "command": "adb install begotorch.apk"
       },
       {
         "step": "02",
         "title": "Add Quick Settings Tile",
-        "instruction": "Edit your notification shade tiles and drag the Begoker Torch tile into your active grid."
+        "instruction": "Pull down the notification shade, edit your Quick Settings tiles, and drag the Begoker Torch tile into your active grid."
       },
       {
         "step": "03",
         "title": "Adjust Flashlight Intensity",
-        "instruction": "Tap the tile to toggle flashlight or long-press to open the in-shade intensity slider with live current telemetry."
+        "instruction": "Tap to toggle or long-press the tile to open the hardware intensity slider for the MT6360 PMIC LED driver."
       }
     ],
     "image": "assets/projects/begotorch/cover.png",
     "features": [
       {
-        "title": "In-Shade Tile & Overlay",
-        "text": "Opens the intensity slider directly over the control center without collapsing the notification shade."
+        "title": "Native TileService",
+        "text": "Integrated Android Quick Settings tile operating directly against MT6360 PMIC flash driver."
       },
       {
-        "title": "Dual UI Styles",
-        "text": "Includes both Apple-style capsule slider with light beam dragging and Material 3 cards."
+        "title": "Non-Collapsing In-Shade Slider",
+        "text": "Smoothly adjust torch brightness directly from the notification shade without launching a full app."
       },
       {
-        "title": "Rootless SysFS Integration",
-        "text": "Direct communication with rootless kernel sysfs nodes for zero-lag hardware brightness control."
+        "title": "AOSP & HyperOS Compatibility",
+        "text": "Fully compatible across LineageOS, PixelOS, HyperOS, and AOSP custom ROMs for begonia."
       }
     ],
     "screenshots": [],
@@ -209,178 +309,25 @@
       {
         "version": "v1.0.0",
         "date": "October 2026",
-        "title": "Native High-Current Dual-LED Quick Settings Tile",
-        "summary": "First official release unlocking high-current hardware torch modes via native sysfs kernel nodes.",
+        "title": "Initial Production Release",
+        "summary": "First production release bringing native Quick Settings flashlight intensity controls to begonia.",
         "changes": [
-          "Direct sysfs driver control bypassing vendor Android framework brightness throttling.",
-          "Multi-level brightness adjustments from soft ambient to maximum high-output dual-LED flash.",
-          "Native Android 10-15 Quick Settings Tile with instantaneous haptic feedback.",
-          "Zero background battery drain and minimal standalone binary size."
+          "Native BegotorchTileService implementation.",
+          "MT6360 PMIC LED current driver integration.",
+          "Non-collapsing in-shade intensity slider dialog."
         ]
       }
     ],
     "maintainers": [
       "txorav"
     ],
-    "featured": true,
-    "category": "Utility"
-  },
-  {
-    "id": "toolbox",
-    "name": "POX Toolbox",
-    "description": "Universal Android diagnostics, hardware telemetry, partition manager, and power tools suite designed for custom ROMs, kernels, and everyday power users.",
-    "github": "https://github.com/POX-project/toolbox",
-    "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)"
-    ],
-    "tutorial": [
-      {
-        "step": "01",
-        "title": "Download Toolbox Package",
-        "instruction": "Download the latest APK release from GitHub Releases.",
-        "command": "adb install -r pox-toolbox.apk"
-      },
-      {
-        "step": "02",
-        "title": "Launch Hardware Telemetry",
-        "instruction": "Open the app to monitor CPU cluster load, RAM/ZRAM compression, and battery thermals in real time."
-      },
-      {
-        "step": "03",
-        "title": "Run Component Diagnostics",
-        "instruction": "Use the built-in touchscreen grid tester, sensor audits, and GPT partition manager to verify hardware health."
-      }
-    ],
-    "image": "assets/projects/toolbox/cover.png",
-    "features": [
-      {
-        "title": "Hardware Diagnostics",
-        "text": "Interactive multi-touch grid test, dead pixel checker, sensor audits, and thermal zone polling."
-      },
-      {
-        "title": "Partition Manager",
-        "text": "Inspect partition layouts, GPT sector bounds, dm-linear super partitions, and filesystem mount types."
-      },
-      {
-        "title": "Deep Memory Analysis",
-        "text": "Examines physical RAM, ZRAM compression algorithms, swap metrics, and system cache usage."
-      }
-    ],
-    "screenshots": [],
-    "version": "v1.0.1",
-    "changelog": [
-      {
-        "version": "v1.0.1",
-        "date": "October 2026",
-        "title": "Enhanced Storage, Partition & NVRAM Tools",
-        "summary": "Updated CLI toolkit for Android power users and custom ROM developers.",
-        "changes": [
-          "Added raw NVRAM and NVDATA partition backup and integrity verification utilities.",
-          "Integrated battery cycle counter decoder and hardware health inspector.",
-          "Direct modem AT command interface via termux or adb shell for diagnostics.",
-          "Compiled against musl-libc for ultra-compact static multi-call binary."
-        ]
-      },
-      {
-        "version": "v1.0.0",
-        "date": "October 2026",
-        "title": "Initial Public Release",
-        "summary": "Core system shell utilities and Begonia hardware diagnostic scripts.",
-        "changes": [
-          "Bundled essential toybox/busybox commands optimized for aarch64 Android.",
-          "Added fast memory and storage benchmark subcommands."
-        ]
-      }
-    ],
-    "maintainers": [
-      "txorav",
-      "methylphetamine"
-    ],
-    "featured": true,
-    "category": "CLI Tool"
-  },
-  {
-    "id": "disland",
-    "name": "Smart Island (Dynamic Island)",
-    "description": "A modern, lightweight, privacy-first Android overlay that turns notifications, media playback, incoming calls, timers, and battery states into a fluid floating Dynamic Island.",
-    "github": "https://github.com/POX-project/disland",
-    "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)"
-    ],
-    "tutorial": [
-      {
-        "step": "01",
-        "title": "Download Smart Island APK",
-        "instruction": "Download the verified release APK from the official repository.",
-        "command": "adb install -r smart-island.apk"
-      },
-      {
-        "step": "02",
-        "title": "Grant Overlay Permissions",
-        "instruction": "Enable Accessibility Service and Notification Listener permissions in Android Settings."
-      },
-      {
-        "step": "03",
-        "title": "Calibrate Screen Position",
-        "instruction": "Adjust island coordinates and punch-hole dimensions in settings to match your device display cutout."
-      }
-    ],
-    "image": "assets/projects/disland/cover.png",
-    "features": [
-      {
-        "title": "Jetpack Compose & Material 3",
-        "text": "Fluid physics-based animations engineered with Kotlin Coroutines and Jetpack Compose."
-      },
-      {
-        "title": "Live Activity Tracking",
-        "text": "Glanceable notifications, media playback seekbars, battery charging states, and active timers."
-      },
-      {
-        "title": "Privacy-First & Zero Trackers",
-        "text": "100% offline, open-source under GPLv3, and verified clean with VirusTotal."
-      }
-    ],
-    "screenshots": [],
-    "version": "v7.0.0",
-    "changelog": [
-      {
-        "version": "v7.0.0",
-        "date": "October 2026",
-        "title": "Smart Island Profiles, Real-Time Lyrics & Physics Polish",
-        "summary": "Major release introducing dynamic notification islands, music synchronization, and customizable gesture controls.",
-        "changes": [
-          "Configurable Island Profiles with interactive pinch-to-resize and smooth spring physics animations.",
-          "Real-time synchronized music lyrics display supporting Spotify, Apple Music, and local media.",
-          "Incoming and active call state parser with animated live call timer and contact avatar.",
-          "Localized App Shortcuts UI strings and overhauled notification extraction engine."
-        ]
-      },
-      {
-        "version": "v6.0.0",
-        "date": "September 2026",
-        "title": "Dynamic Island Engine 2.0",
-        "summary": "Core architecture overhaul for low latency and OLED burn-in protection.",
-        "changes": [
-          "Micro-shift pixel jitter algorithm to safeguard AMOLED/OLED displays against burn-in.",
-          "Charging animation island with battery percentage, wattage, and temperature."
-        ]
-      }
-    ],
-    "maintainers": [
-      "methylphetamine",
-      "POX Community"
-    ],
-    "featured": true,
-    "category": "App"
+    "featured": false,
+    "category": "Tools"
   },
   {
     "id": "bego-docs",
     "name": "Begonia Documentation",
-    "description": "The official documentation portal, troubleshooting guides, recovery catalog, and knowledge base for Redmi Note 8 Pro (begonia / begoniain).",
+    "description": "Official documentation website, recovery archive, and flashing guides for Redmi Note 8 Pro custom development, ROMs, kernel configuration, and troubleshooting.",
     "github": "https://github.com/POX-project/bego-docs",
     "supportedPhones": [
       "Redmi Note 8 Pro (begonia)",
@@ -389,34 +336,30 @@
     "tutorial": [
       {
         "step": "01",
-        "title": "Browse Live Portal",
-        "instruction": "Access the comprehensive online documentation portal or clone the repository locally.",
-        "command": "git clone https://github.com/POX-project/bego-docs.git"
+        "title": "Visit Online Documentation",
+        "instruction": "Browse the live documentation portal for complete Begonia hardware specs, flashing tutorials, and recovery archives.",
+        "command": "xdg-open https://pox-project.github.io/bego-docs/"
       },
       {
         "step": "02",
-        "title": "Locate Device Guide",
-        "instruction": "Find dedicated walkthroughs for bootloader unlocking, clean flashing, Play Integrity, and recovery setups."
-      },
-      {
-        "step": "03",
-        "title": "Apply Verified Fixes",
-        "instruction": "Follow step-by-step troubleshooting procedures for TWRP decryption, Widevine L3, and camera configs."
+        "title": "Run Locally",
+        "instruction": "Optionally clone and serve the documentation locally using any lightweight HTTP server.",
+        "command": "git clone https://github.com/POX-project/bego-docs.git && cd bego-docs && npx serve ."
       }
     ],
     "image": "assets/projects/bego-docs/cover.png",
     "features": [
       {
-        "title": "Complete Flashing Guides",
-        "text": "Tested guides for bootloader unlocking, dynamic partitions, and firmware restoration."
+        "title": "Comprehensive Flashing Guides",
+        "text": "Step-by-step guides for bootloader unlocking, fastboot flashing, dynamic partitions, and recovery management."
       },
       {
-        "title": "Troubleshooting Knowledgebase",
-        "text": "Step-by-step fixes for decryption issues, bootloops, sensor calibration, and battery drain."
+        "title": "Verified Recovery Archive",
+        "text": "Catalog of verified TWRP, OrangeFox, PBRP, and SHRP builds tailored for Redmi Note 8 Pro."
       },
       {
-        "title": "Curated Recovery Catalog",
-        "text": "Verified download mirrors and recovery builds (TWRP, OrangeFox, PBRP, SHRP)."
+        "title": "Hardware Troubleshooting",
+        "text": "Troubleshooting guides for MT6785 preloader brick recovery, SP Flash Tool bypass, and NVRAM restorations."
       }
     ],
     "screenshots": [],
@@ -425,13 +368,11 @@
       {
         "version": "v1.0.0",
         "date": "October 2026",
-        "title": "Official Begonia Documentation Web Portal",
-        "summary": "Comprehensive community knowledge base, flashing procedures, and hardware specifications.",
+        "title": "Official Documentation Portal Launch",
+        "summary": "Public deployment of the official knowledge base and recovery catalog for Redmi Note 8 Pro.",
         "changes": [
-          "Step-by-step flashing guides for custom ROMs, recoveries, and mainline POX kernels.",
-          "Deep search functionality and instant multi-language translation integration.",
-          "Dedicated hard-unbrick recovery portal with SP Flash Tool and bypass authorization guides.",
-          "Complete Begonia partition layout, pinout references, and hardware sensor calibration guides."
+          "Initial release of full begonia / begoniain guides.",
+          "Custom recovery catalog and partition reference documentation."
         ]
       }
     ],
@@ -443,182 +384,45 @@
     "category": "Docs"
   },
   {
-    "id": "bootanimation-tool",
-    "name": "POX Bootanimation Tool",
-    "description": "An automated generator and packager that converts animated GIFs and videos into compliant Android boot animations, creating recovery-flashable ZIPs with automated backup and restore.",
-    "github": "https://github.com/POX-project/bootanimation-tool",
+    "id": "pox-begonia-kernel-benchmark",
+    "name": "POX Begonia Benchmark",
+    "description": "Multi-subsystem Android kernel benchmarking and regression tracking suite built specifically for Redmi Note 8 Pro (begonia / MediaTek Helio G90T / MT6785) running Pox Kernel.",
+    "github": "https://github.com/POX-project/pox-begonia-kernel-benchmark",
     "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)"
+      "Redmi Note 8 Pro (begonia)"
     ],
     "tutorial": [
       {
         "step": "01",
-        "title": "Generate Bootanimation",
-        "instruction": "Run the tool to convert your GIF or frames into an Android bootanimation.zip with target resolution.",
-        "command": "python3 bootanimation_tool.py --input animation.gif --device begonia"
-      },
-      {
-        "step": "02",
-        "title": "Reboot to Custom Recovery",
-        "instruction": "Boot your device into TWRP or OrangeFox Recovery.",
-        "command": "adb reboot recovery"
-      },
-      {
-        "step": "03",
-        "title": "Flash Bootanimation ZIP",
-        "instruction": "Install the generated ZIP via ADB sideload without needing root privileges.",
-        "command": "adb sideload bootanimation_flashable.zip"
-      }
-    ],
-    "image": "assets/projects/bootanimation-tool/cover.png",
-    "features": [
-      {
-        "title": "Rootless Flashable ZIPs",
-        "text": "Flashes directly in TWRP, OrangeFox, PBRP, and SHRP without requiring Magisk or root."
-      },
-      {
-        "title": "Intelligent Auto-Backup",
-        "text": "Automatically backs up stock animations with MD5 hashes and creates a one-click restore ZIP."
-      },
-      {
-        "title": "Predefined Phone Database",
-        "text": "Built-in resolution presets for Redmi Note 8 Pro, Google Pixel, Samsung Galaxy, POCO, and OnePlus."
-      }
-    ],
-    "screenshots": [],
-    "version": "v1.0.0",
-    "changelog": [
-      {
-        "version": "v1.0.0",
-        "date": "October 2026",
-        "title": "Automated Android Boot Animation Converter & Packager",
-        "summary": "First official release of the high-speed boot animation packaging utility.",
-        "changes": [
-          "Automated multi-resolution frame resizing and aspect-ratio preservation from GIF, MP4, or PNG sequences.",
-          "Automatic desc.txt generation with loop count, FPS timing, and part folder structures.",
-          "Zero-compression ZIP packaging strictly compliant with Android boot animation specifications.",
-          "One-click ADB push and live preview on connected Android devices."
-        ]
-      }
-    ],
-    "maintainers": [
-      "txorav"
-    ],
-    "featured": false,
-    "category": "CLI Tool"
-  },
-  {
-    "id": "romtool",
-    "name": "POX ROM Tool & Repacker",
-    "description": "A high-performance modular Android custom ROM unpacker and repacker written in Go for Android 10 through 16+, supporting Dynamic Partitions (super.img, payload.bin) and JSON state tracking.",
-    "github": "https://github.com/POX-project/romtool",
-    "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "All Dynamic Partition Devices"
-    ],
-    "tutorial": [
-      {
-        "step": "01",
-        "title": "Unpack ROM Image",
-        "instruction": "Extract payload.bin or custom ROM zip into an organized project directory.",
-        "command": "./romtool unpack rom.zip --output my_rom/"
-      },
-      {
-        "step": "02",
-        "title": "Modify System or Vendor",
-        "instruction": "Edit files inside extracted partition folders (system, vendor, product, system_ext)."
-      },
-      {
-        "step": "03",
-        "title": "Repack with State Tracking",
-        "instruction": "Repack with automatic dynamic partition byte-size recalculation and sparse verification.",
-        "command": "./romtool repack my_rom/ --signed"
-      }
-    ],
-    "image": "assets/projects/romtool/cover.png",
-    "features": [
-      {
-        "title": "Dynamic Partition Engine",
-        "text": "Parses payload.bin and super.img, automatically updating dynamic_partitions_op_list sizes."
-      },
-      {
-        "title": "State & Change Tracking",
-        "text": "Intelligent JSON tracker detects changed partitions and only rebuilds modified images."
-      },
-      {
-        "title": "Portable Dev Toolkit",
-        "text": "Self-contained binaries for lpmake, sload.f2fs, make_ext4fs, and EROFS utilities."
-      }
-    ],
-    "screenshots": [],
-    "version": "v1.0.0",
-    "changelog": [
-      {
-        "version": "v1.0.0",
-        "date": "October 2026",
-        "title": "Modular Android Custom ROM Debloater & Porter",
-        "summary": "First official release for ROM maintainers, porters, and custom ROM builders.",
-        "changes": [
-          "Automated payload.bin and super.img sparse extraction into mountable ext4/erofs images.",
-          "Curated debloat presets for MIUI, HyperOS, ColorOS, and Flyme ported bases.",
-          "Dynamic partition resizing utilities for Begonia system, vendor, and product partitions.",
-          "Auto-generates clean flashable updater-script and update-binary packages."
-        ]
-      }
-    ],
-    "maintainers": [
-      "txorav",
-      "methylphetamine"
-    ],
-    "featured": false,
-    "category": "ROM Tool"
-  },
-  {
-    "id": "android-test-suite",
-    "name": "Android Test Suite (TSF)",
-    "description": "An automated, asynchronous Android hardware and subsystem diagnostic audit suite featuring an interactive Textual terminal UI and headless CI/CLI execution modes.",
-    "github": "https://github.com/POX-project/android-test-suite",
-    "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)"
-    ],
-    "tutorial": [
-      {
-        "step": "01",
-        "title": "Install Dependencies",
-        "instruction": "Clone the repository and install required Python diagnostic libraries.",
-        "command": "pip install -r requirements.txt"
-      },
-      {
-        "step": "02",
-        "title": "Connect Android Device",
-        "instruction": "Enable USB Debugging on your phone and confirm connection with ADB.",
+        "title": "Connect Device via ADB",
+        "instruction": "Ensure your Redmi Note 8 Pro is connected with ADB debugging enabled.",
         "command": "adb devices"
       },
       {
+        "step": "02",
+        "title": "Execute Benchmark Suite",
+        "instruction": "Run the benchmark runner script across all kernel subsystems.",
+        "command": "adb shell sh /data/local/tmp/benchmark.sh"
+      },
+      {
         "step": "03",
-        "title": "Launch Diagnostic TUI",
-        "instruction": "Start the interactive terminal UI to audit battery health, CPU throttling, and sensor responsiveness.",
-        "command": "python3 -m tsf.tui"
+        "title": "Review Performance Delta",
+        "instruction": "Inspect the generated markdown report with statistical delta comparisons against baseline builds."
       }
     ],
-    "image": "assets/projects/android-test-suite/cover.png",
+    "image": "assets/projects/pox-begonia-kernel-benchmark/cover.png",
     "features": [
       {
-        "title": "Full Subsystem Audits",
-        "text": "Audits battery cycle wear, CPU throttling, Vulkan GPU profiles, display nodes, and biometrics."
+        "title": "Multi-Subsystem Verification Matrix",
+        "text": "Measures CPU scheduling latency, UFS storage I/O throughput, memory bandwidth, and thermal dissipation rates."
       },
       {
-        "title": "Memory & LMKD Stress",
-        "text": "Validates low-memory killer daemon thresholds, swap allocation, and RAM compaction under load."
+        "title": "Mathematical Regression Tracking",
+        "text": "Calculates performance deltas across builds to guarantee that every kernel revision improves efficiency."
       },
       {
-        "title": "Terminal TUI Interface",
-        "text": "Rich live terminal dashboard built with Textual for interactive diagnostic workflows."
+        "title": "Automated CI/CD Integration",
+        "text": "Runs headlessly in continuous integration testbeds to catch performance regressions before releases."
       }
     ],
     "screenshots": [],
@@ -627,91 +431,12 @@
       {
         "version": "v1.0.0",
         "date": "October 2026",
-        "title": "End-to-End Android Stability & Regression Test Harness",
-        "summary": "Official test suite for ROM, kernel, and driver validation.",
+        "title": "Initial Benchmark Suite Release",
+        "summary": "First official release of the Pox Begonia Kernel Benchmark & Verification Framework.",
         "changes": [
-          "Automated ADB execution of memory leak tests, deep sleep suspend/resume cycles, and thermal load.",
-          "Frame rendering time analysis and jank detector with percentile latency reports.",
-          "Automated logcat error scraper with ANR, crash trace, and tombstone parsing.",
-          "Exports interactive HTML validation summaries and benchmark graphs."
-        ]
-      }
-    ],
-    "maintainers": [
-      "txorav",
-      "POX Community"
-    ],
-    "featured": false,
-    "category": "Testing"
-  },
-  {
-    "id": "poxlogsdumper",
-    "name": "POX Logs Dumper",
-    "description": "A high-performance diagnostic log collector for custom recoveries (TWRP, OrangeFox, PBRP, SHRP) that packages every system and kernel log into a single timestamped archive.",
-    "github": "https://github.com/POX-project/poxlogsdumper",
-    "supportedPhones": [
-      "Generic (Any Android Device)",
-      "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)",
-      "All Custom Recovery Devices"
-    ],
-    "tutorial": [
-      {
-        "step": "01",
-        "title": "Boot Custom Recovery",
-        "instruction": "Reboot your phone into your installed custom recovery environment.",
-        "command": "adb reboot recovery"
-      },
-      {
-        "step": "02",
-        "title": "Flash Logs Dumper ZIP",
-        "instruction": "Flash poxlogsdumper.zip via ADB sideload or the recovery install menu.",
-        "command": "adb sideload poxlogsdumper.zip"
-      },
-      {
-        "step": "03",
-        "title": "Extract Diagnostic Bundle",
-        "instruction": "Pull the generated logs archive from storage for bug reports and analysis.",
-        "command": "adb pull /sdcard/logs*.zip ./"
-      }
-    ],
-    "image": "assets/projects/poxlogsdumper/cover.png",
-    "features": [
-      {
-        "title": "Comprehensive Log Dump",
-        "text": "Collects dmesg, logcat, recovery.log, pstore, last_kmsg, tombstone crashes, and mount points."
-      },
-      {
-        "title": "100% Safe & Read-Only",
-        "text": "Never writes to or formats system partitions; operates strictly as a read-only diagnostics extractor."
-      },
-      {
-        "title": "Universal Recovery Support",
-        "text": "Compatible with TWRP, OrangeFox, PBRP, SHRP, and LineageOS Recovery."
-      }
-    ],
-    "screenshots": [],
-    "version": "v2.0",
-    "changelog": [
-      {
-        "version": "v2.0",
-        "date": "October 2026",
-        "title": "Universal Android Diagnostics & One-Click Debug Collector",
-        "summary": "Major version 2.0 release featuring hardware telemetry dumps and sensitive data sanitization.",
-        "changes": [
-          "One-click capture of dmesg, logcat, pstore, last_kmsg, and tombstones into a clean ZIP.",
-          "Hardware telemetry dump: CPU frequency distribution, thermal zone logs, battery health, and memory stats.",
-          "Automatic scrubbing of sensitive identifiers (IMEI, MAC addresses, device serials) for privacy.",
-          "Works in both Android userland (with root) and custom recoveries (TWRP, OrangeFox, PBRP)."
-        ]
-      },
-      {
-        "version": "v1.0.0",
-        "date": "September 2026",
-        "title": "Initial Diagnostic Script Release",
-        "summary": "Basic dmesg and logcat capture for recovery environments.",
-        "changes": [
-          "Initial shell script for capturing recovery logs and kernel crashes."
+          "Automated CPU scheduling and memory throughput benchmarks.",
+          "Storage I/O evaluation for UFS 2.1 flash memory.",
+          "Mathematical delta tracking against baseline releases."
         ]
       }
     ],
@@ -719,87 +444,12 @@
       "txorav"
     ],
     "featured": false,
-    "category": "Utility"
-  },
-  {
-    "id": "pox-imei-fixer",
-    "name": "POX IMEI Fixer",
-    "description": "Universal modem IMEI restoration suite, calibrated NVRAM/NVDATA partition generator, automated radio backup engine, and dynamic kernel RSA patcher for MediaTek devices.",
-    "github": "https://github.com/POX-project/pox-imei-fixer",
-    "supportedPhones": [
-      "Redmi Note 8 Pro (begonia)",
-      "MediaTek MT6785 Devices"
-    ],
-    "tutorial": [
-      {
-        "step": "01",
-        "title": "Verify Modem Baseband",
-        "instruction": "Confirm baseband and MediaTek chipset compatibility before flashing.",
-        "command": "adb shell getprop gsm.version.baseband"
-      },
-      {
-        "step": "02",
-        "title": "Reboot to Custom Recovery",
-        "instruction": "Boot into TWRP or OrangeFox recovery to enable automated partition backup.",
-        "command": "adb reboot recovery"
-      },
-      {
-        "step": "03",
-        "title": "Flash IMEI Fixer Archive",
-        "instruction": "Flash the signed archive to backup all radio partitions and apply calibrated NVRAM repairs.",
-        "command": "adb sideload pox-imei-fixer.zip"
-      }
-    ],
-    "image": "assets/projects/pox-imei-fixer/cover.png",
-    "features": [
-      {
-        "title": "Automated Modem Backups",
-        "text": "Dumps and SHA256-verifies all 8 radio partitions before applying any modifications."
-      },
-      {
-        "title": "Dynamic Kernel RSA Patcher",
-        "text": "In-memory kernel patch via SMC to unlock baseband modem RSA verification at boot."
-      },
-      {
-        "title": "Universal Root & Recovery",
-        "text": "Flashes in recovery or installs as a module in KernelSU, APatch, and Magisk."
-      }
-    ],
-    "screenshots": [],
-    "version": "v1.1.0",
-    "changelog": [
-      {
-        "version": "v1.1.0",
-        "date": "October 2026",
-        "title": "Universal Modem IMEI, Baseband & VoLTE Restoration Tool",
-        "summary": "Enhanced cellular baseband repair tool with dynamic SIM slot routing and SELinux policies.",
-        "changes": [
-          "Universal recovery and root-manager installation flows with strict NVRAM validation.",
-          "Dynamic active SIM slot routing for reliable VoLTE and Carrier Aggregation on both slots.",
-          "VoLTE/IMS property injection, SELinux policy fixes, and NVDATA permission repairs.",
-          "Hardware write-protection checks to eliminate risk of baseband corruption."
-        ]
-      },
-      {
-        "version": "v1.0.0",
-        "date": "October 2026",
-        "title": "Initial Cellular Baseband Fixer",
-        "summary": "First release addressing MediaTek Begonia NVRAM corrupted partition warnings.",
-        "changes": [
-          "Automated fix for ERROR 0x10 NVRAM WARNING in Wi-Fi and Bluetooth settings."
-        ]
-      }
-    ],
-    "maintainers": [
-      "txorav"
-    ],
-    "featured": false,
-    "category": "Utility"
+    "category": "Tools"
   },
   {
     "id": "android_vendor_redmi_begonia",
     "name": "Begonia Vendor Tree",
-    "description": "Complete LineageOS and AOSP vendor tree and 13 handcrafted open-source C++ AIDL/HIDL hardware abstraction layers (HALs) for Redmi Note 8 Pro.",
+    "description": "Complete proprietary vendor tree and hardware abstraction layer (HAL) suite for Xiaomi Redmi Note 8 Pro (begonia / MT6785), structured in canonical LineageOS / AOSP format.",
     "github": "https://github.com/POX-project/android_vendor_redmi_begonia",
     "supportedPhones": [
       "Redmi Note 8 Pro (begonia)",
@@ -808,35 +458,30 @@
     "tutorial": [
       {
         "step": "01",
-        "title": "Clone Vendor Repository",
-        "instruction": "Clone the vendor tree directly into your AOSP or LineageOS build environment.",
-        "command": "git clone https://github.com/POX-project/android_vendor_redmi_begonia.git vendor/xiaomi/begonia"
+        "title": "Clone into ROM Tree",
+        "instruction": "Clone the vendor tree into your ROM source directory under vendor/xiaomi/begonia.",
+        "command": "git clone https://github.com/POX-project/android_vendor_redmi_begonia vendor/xiaomi/begonia"
       },
       {
         "step": "02",
-        "title": "Include Board Config",
-        "instruction": "Reference begonia-vendor.mk and BoardConfigVendor.mk in your device tree makefiles."
-      },
-      {
-        "step": "03",
-        "title": "Compile Target Image",
-        "instruction": "Build your target system image with the integrated open-source HAL suite.",
-        "command": "m bacon"
+        "title": "Build ROM",
+        "instruction": "Source the build environment and compile your target ROM image.",
+        "command": "source build/envsetup.sh && lunch lineage_begonia-userdebug && mka bacon"
       }
     ],
     "image": "assets/projects/android_vendor_redmi_begonia/cover.png",
     "features": [
       {
-        "title": "Unified Biometrics HAL",
-        "text": "Dynamic probing for FPC1020 vs Goodix GF3208 fingerprint sensors with Microtrust TEE integration."
+        "title": "Canonical LineageOS / AOSP Structure",
+        "text": "Cleanly organized vendor tree conforming to modern Android Open Source Project specifications."
       },
       {
-        "title": "Modern AIDL HAL Suite",
-        "text": "Production AIDL implementations for lights, thermal, power scheduling, consumer IR, and vibrator."
+        "title": "Hardware Abstraction Layers (HALs)",
+        "text": "Includes audio, camera, sensors, thermal, and radio interface layers for MediaTek Helio G90T."
       },
       {
-        "title": "Audited Blobs & Shims",
-        "text": "Reverse-engineered C/C++ source code, Bionic compatibility shims, and Soong build definitions."
+        "title": "Prebuilt Proprietary Binaries",
+        "text": "Extracted and verified proprietary blobs providing camera, connectivity, and hardware security features."
       }
     ],
     "screenshots": [],
@@ -845,13 +490,12 @@
       {
         "version": "v1.0.0",
         "date": "October 2026",
-        "title": "Unified Begonia Device Tree & Proprietary Vendor Blobs",
-        "summary": "Production-ready vendor tree for Android 14 and 15 custom ROM bringup.",
+        "title": "Canonical Begonia Vendor Tree Release",
+        "summary": "Production-ready vendor tree for Xiaomi Redmi Note 8 Pro custom ROM compilation.",
         "changes": [
-          "Unified Goodix and FPC fingerprint HAL integration with instant wake-on-tap.",
-          "Native AIDL lights, consumer IR, and vibrator HAL implementations.",
-          "Bundled Image.gz-dtb kernel support with TWRP/OrangeFox Magisk flashing compatibility.",
-          "Removed legacy GKI dependencies and standardized modern Android.bp build modules."
+          "Full proprietary vendor binary extraction and cleanup.",
+          "Added LineageOS 20/21/22 compatible makefiles.",
+          "Integrated MediaTek MT6785 hardware HALs."
         ]
       }
     ],
@@ -860,50 +504,48 @@
       "methylphetamine"
     ],
     "featured": false,
-    "category": "Device Tree"
+    "category": "Vendor"
   },
   {
-    "id": "pox-begonia-kernel-benchmark",
-    "name": "POX Begonia Benchmark",
-    "description": "Automated Android kernel verification and regression benchmarking suite for Redmi Note 8 Pro (begonia / MT6785), testing CPU, memory, storage I/O, IPC, and thermals.",
-    "github": "https://github.com/POX-project/pox-begonia-kernel-benchmark",
+    "id": "pox-imei-fixer",
+    "name": "POX IMEI Fixer",
+    "description": "Universal IMEI repair, NVRAM/NVDATA partition generator, automated modem backup engine, and dynamic kernel RSA patcher for MediaTek Helio G90T devices (MT6785 / begonia).",
+    "github": "https://github.com/POX-project/pox-imei-fixer",
     "supportedPhones": [
-      "Redmi Note 8 Pro (begonia)",
-      "MediaTek MT6785 Devices"
+      "Redmi Note 8 Pro (begonia)"
     ],
     "tutorial": [
       {
         "step": "01",
-        "title": "Connect Device via ADB",
-        "instruction": "Enable USB debugging on your device and verify connection via ADB.",
-        "command": "adb devices"
+        "title": "Boot into Custom Recovery",
+        "instruction": "Reboot your device into TWRP or OrangeFox recovery.",
+        "command": "adb reboot recovery"
       },
       {
         "step": "02",
-        "title": "Run Benchmark Suite",
-        "instruction": "Execute the benchmark runner across CPU, storage, memory, and thermal subsystems.",
-        "command": "python3 run_benchmark.py --device begonia"
+        "title": "Run IMEI Repair Script",
+        "instruction": "Execute the restoration utility via ADB shell or flash the flashable restoration ZIP.",
+        "command": "adb push fix_imei.sh /tmp/ && adb shell sh /tmp/fix_imei.sh"
       },
       {
         "step": "03",
-        "title": "Inspect Performance Report",
-        "instruction": "Review the generated performance report and latency percentiles in markdown or JSON.",
-        "command": "cat reports/latest_benchmark.md"
+        "title": "Reboot & Confirm Baseband",
+        "instruction": "Reboot to system and verify that your Baseband Version and IMEI numbers are correctly populated under Settings."
       }
     ],
-    "image": "assets/projects/pox-begonia-kernel-benchmark/cover.png",
+    "image": "assets/projects/pox-imei-fixer/cover.png",
     "features": [
       {
-        "title": "Dual Execution Tiers",
-        "text": "Supports Root Mode for governor locking and cache dropping, plus zero-privilege non-root mode."
+        "title": "NVRAM & NVDATA Restoration",
+        "text": "Automated synthesis and repair of corrupted nvram and nvdata partition structures."
       },
       {
-        "title": "Comprehensive Subsystems",
-        "text": "Audits CPU primes, RAM copy speeds, storage IOPS, Binder IPC latency, and frame pacing."
+        "title": "Dynamic Kernel RSA Patcher",
+        "text": "Patches modem integrity checks in memory to restore cellular connectivity without bricking."
       },
       {
-        "title": "Regression Analysis",
-        "text": "Generates detailed markdown summaries and JSON metric archives to validate kernel modifications."
+        "title": "Universal Root Compatibility",
+        "text": "Compatible with FolkPatch, APatch, KernelSU-Next, and Magisk setups."
       }
     ],
     "screenshots": [],
@@ -912,13 +554,12 @@
       {
         "version": "v1.0.0",
         "date": "October 2026",
-        "title": "Automated Continuous Kernel Performance & Benchmark Harness",
-        "summary": "Official benchmarking framework for Begonia kernel testing and regression analysis.",
+        "title": "Initial Release for MT6785 Begonia",
+        "summary": "Initial release of automated modem backup engine and dynamic RSA kernel patcher.",
         "changes": [
-          "Established 1.0.0 Sultan baseline metrics across 23 continuous passes (311s duration).",
-          "Automated latency tests verifying 8.86 \u00b5s context switch and 0.10 ms process fork speed.",
-          "Memory throughput measurement validating 6,310 MB/s sustained LPDDR4X bandwidth.",
-          "Automatic enforcement of noop I/O scheduler and dynamic fsync during benchmark runs."
+          "Full NVRAM/NVDATA partition reconstruction.",
+          "Automated modem calibration backup engine.",
+          "Dynamic RSA patcher for MediaTek Helio G90T."
         ]
       }
     ],
@@ -926,6 +567,694 @@
       "txorav"
     ],
     "featured": false,
-    "category": "Benchmark"
+    "category": "Tools"
+  },
+  {
+    "id": "orangefox-begonia-build",
+    "name": "OrangeFox Begonia Recovery Builder",
+    "description": "Automated OrangeFox Recovery R12.1 build pipeline for Xiaomi Redmi Note 8 Pro (begonia) supporting dynamic partitions, explicit EROFS/ext4 fstab, and FBEv2 decryption.",
+    "github": "https://github.com/POX-project/orangefox-begonia-build",
+    "supportedPhones": [
+      "Redmi Note 8 Pro (begonia)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Reboot to Fastboot Mode",
+        "instruction": "Power down your Redmi Note 8 Pro, then hold Volume Down + Power to enter fastboot mode.",
+        "command": "adb reboot bootloader"
+      },
+      {
+        "step": "02",
+        "title": "Flash OrangeFox Recovery Image",
+        "instruction": "Flash the compiled OrangeFox recovery.img into your recovery partition.",
+        "command": "fastboot flash recovery recovery.img"
+      },
+      {
+        "step": "03",
+        "title": "Boot into OrangeFox",
+        "instruction": "Reboot directly into OrangeFox recovery to finalize installation.",
+        "command": "fastboot reboot recovery"
+      }
+    ],
+    "image": "assets/projects/orangefox-begonia-build/cover.png",
+    "features": [
+      {
+        "title": "OrangeFox 12.1 Minimal Manifest",
+        "text": "Synchronized with official upstream OrangeFox 12.1 minimal tree with automated GitHub Actions compilation."
+      },
+      {
+        "title": "EROFS & Dynamic Partitions",
+        "text": "Native mounting support for modern EROFS and ext4 partitions on Android 12 through Android 15."
+      },
+      {
+        "title": "FBEv2 Decryption",
+        "text": "Full support for File-Based Encryption v2 to access internal storage on encrypted custom ROMs."
+      }
+    ],
+    "screenshots": [],
+    "version": "orangefox-r12.0-begonia",
+    "changelog": [
+      {
+        "version": "orangefox-r12.0-begonia",
+        "date": "October 2026",
+        "title": "Official OrangeFox R12.0 Begonia Release",
+        "summary": "Automated GitHub Actions build producing verified OrangeFox recovery for Redmi Note 8 Pro.",
+        "changes": [
+          "Compiled OrangeFox 12.1 minimal manifest with unified begonia device tree.",
+          "Added EROFS partition support and explicit ext4 fstab fallback.",
+          "Enabled FBEv2 decryption for Android 13/14/15 custom ROMs.",
+          "Integrated automatic zip installer creation for fastboot and recovery flashing."
+        ]
+      }
+    ],
+    "maintainers": [
+      "methylphetamine"
+    ],
+    "featured": false,
+    "category": "Recovery"
+  },
+  {
+    "id": "device_xiaomi_begonia-orangefox",
+    "name": "OrangeFox Device Tree for Begonia",
+    "description": "Unified OrangeFox Recovery device tree and recovery configuration for Xiaomi Redmi Note 8 Pro (begonia / MT6785 / Helio G90T).",
+    "github": "https://github.com/POX-project/device_xiaomi_begonia-orangefox",
+    "supportedPhones": [
+      "Redmi Note 8 Pro (begonia)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Clone Device Tree into Recovery Source",
+        "instruction": "Clone the repository into your recovery source directory.",
+        "command": "git clone https://github.com/POX-project/device_xiaomi_begonia-orangefox.git device/xiaomi/begonia"
+      },
+      {
+        "step": "02",
+        "title": "Initialize Environment",
+        "instruction": "Set up the build environment and select the twrp_begonia target.",
+        "command": "source build/envsetup.sh && lunch twrp_begonia-eng"
+      },
+      {
+        "step": "03",
+        "title": "Build Recovery Image",
+        "instruction": "Compile the recovery image.",
+        "command": "mka recoveryimage"
+      }
+    ],
+    "image": "assets/projects/device_xiaomi_begonia-orangefox/cover.png",
+    "features": [
+      {
+        "title": "Unified Begonia & Begoniain Hardware Target",
+        "text": "Comprehensive device tree covering all regional Redmi Note 8 Pro variants with MediaTek Helio G90T."
+      },
+      {
+        "title": "Dynamic Partition Layouts",
+        "text": "Accurate partition maps for dynamic system, vendor, product, and system_ext logical volumes."
+      },
+      {
+        "title": "Kernel & Crypto Hooks",
+        "text": "Integrates device-specific cryptographic keys and kernel hooks for seamless FBEv2 data decryption."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Unified Begonia OrangeFox Tree Bringup",
+        "summary": "Initial device tree bringup for OrangeFox recovery on Redmi Note 8 Pro.",
+        "changes": [
+          "Unified begonia and begoniain target configuration.",
+          "Configured dynamic partition handling and Android 12-15 decryption rules."
+        ]
+      }
+    ],
+    "maintainers": [
+      "methylphetamine",
+      "txorav"
+    ],
+    "featured": false,
+    "category": "Recovery"
+  },
+  {
+    "id": "CloniX",
+    "name": "CloniX",
+    "description": "True multi-instance app cloning framework for Android 9+ (API 28–36) that clones installed apps into real APK installs with independent Linux UIDs, SELinux domains, and isolated storage sandboxes.",
+    "github": "https://github.com/POX-project/CloniX",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Install CloniX APK",
+        "instruction": "Download and install the latest CloniX release on any Android device running Android 9 or higher.",
+        "command": "adb install CloniX-release.apk"
+      },
+      {
+        "step": "02",
+        "title": "Select App to Clone",
+        "instruction": "Open CloniX, browse your installed applications, and choose any user or system app to duplicate."
+      },
+      {
+        "step": "03",
+        "title": "Mutate & Build Isolated Clone",
+        "instruction": "The CloneForge engine rewrites manifests, renames package IDs, and builds a genuine isolated APK."
+      },
+      {
+        "step": "04",
+        "title": "Install & Launch",
+        "instruction": "Install the cloned APK. Each clone runs with its own Linux UID, isolated data storage, and separate app credentials."
+      }
+    ],
+    "image": "assets/projects/CloniX/cover.png",
+    "features": [
+      {
+        "title": "True First-Class OS Citizen",
+        "text": "Unlike legacy virtual app containers, each clone is a real APK with its own Linux UID, avoiding phantom process kills on Android 12-16."
+      },
+      {
+        "title": "CloneForge In-Device Engine",
+        "text": "Performs static binary package mutation of AndroidManifest.xml and ARSC string pools directly on your device."
+      },
+      {
+        "title": "Isolated SELinux Sandboxes",
+        "text": "Independent data directories prevent cross-account tracking and telemetry leakage between duplicate accounts."
+      },
+      {
+        "title": "Android 9 to 16+ Support",
+        "text": "Fully tested across API levels 28 through 36 with split APK and app bundle ingestion."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Official CloniX v1.0.0 Launch",
+        "summary": "First stable public release of the CloneForge native Android cloning engine.",
+        "changes": [
+          "Production release of CloneForge static binary mutation engine.",
+          "Support for split APKs, bundle ingestion, and custom signing block preservation.",
+          "Android 9 through Android 16 (API 28-36) validation.",
+          "Integrated native package installer with rootless session installation."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav"
+    ],
+    "featured": true,
+    "category": "Tools"
+  },
+  {
+    "id": "commix",
+    "name": "Commix Pro Camera",
+    "description": "Professional cinema camera and computational photography suite built in native Jetpack Compose and C++20 Aether NDK with direct OEM Camera HAL3 access for Android 9+ (API 28–35).",
+    "github": "https://github.com/POX-project/commix",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Install Commix APK",
+        "instruction": "Download and install the Commix Pro Camera APK on any Android 9+ device.",
+        "command": "adb install commix-release.apk"
+      },
+      {
+        "step": "02",
+        "title": "Grant Camera & Sensor Permissions",
+        "instruction": "Open the app and grant Camera, Audio, and Storage permissions for direct HAL3 access."
+      },
+      {
+        "step": "03",
+        "title": "Dial In Exposure & Cinema Scopes",
+        "instruction": "Use the rotary dials for manual shutter speed, ISO, and focus peaking while monitoring RGB parade and waveform."
+      },
+      {
+        "step": "04",
+        "title": "Capture Cinema Video & RAW DNG",
+        "instruction": "Record high-bitrate 4K video or capture 14-bit uncompressed RAW DNG stills."
+      }
+    ],
+    "image": "assets/projects/commix/cover.png",
+    "features": [
+      {
+        "title": "C++20 Aether SIMD DSP Engine",
+        "text": "High-performance lock-free queues, 8-worker thread pool, real-time Bayer demosaic, and IMU Gyroflow logging."
+      },
+      {
+        "title": "Direct Camera HAL3 Access",
+        "text": "Bypasses OEM post-processing restrictions with direct manual control of shutter angle, ISO, and manual focus."
+      },
+      {
+        "title": "Professional Cinema Scopes",
+        "text": "Real-time false color, zebra striping, RGB waveform parade, and vectorscope overlays."
+      },
+      {
+        "title": "120Hz Jetpack Compose UI",
+        "text": "Fluid tactile rotary dials and Apple cinema aesthetic built with Kotlin 2.1 and Compose Strong Skipping."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Commix Pro Camera 1.0 Release",
+        "summary": "Initial stable release with C++20 Aether DSP engine and Camera HAL3 direct driver.",
+        "changes": [
+          "Integrated C++20 ARM64 Aether SIMD processing pipeline.",
+          "Real-time RGB waveform, vectorscope, and zebra striping overlays.",
+          "Direct Camera2 HAL3 manual controls with RAW DNG image capture.",
+          "Zero-overhead MediaCodec 4K/60fps video recording pipeline."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
+    ],
+    "featured": true,
+    "category": "Tools"
+  },
+  {
+    "id": "toolbox",
+    "name": "POX Toolbox",
+    "description": "A comprehensive Android system utilities, hardware diagnostics, and device management suite designed for custom ROMs, kernels, and everyday power users.",
+    "github": "https://github.com/POX-project/toolbox",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Download and Install APK",
+        "instruction": "Grab the latest release from the repository or project releases page.",
+        "command": "adb install pox-toolbox-release.apk"
+      },
+      {
+        "step": "02",
+        "title": "Run First Diagnostic Scan",
+        "instruction": "Open the app and run a full diagnostic scan to audit hardware sensors, partition health, and storage performance."
+      },
+      {
+        "step": "03",
+        "title": "Apply Tweaks & Export Logs",
+        "instruction": "Configure power tweaks, monitor thermal throttles, or export full diagnostic logs for support."
+      }
+    ],
+    "image": "assets/projects/toolbox/cover.png",
+    "features": [
+      {
+        "title": "Hardware Sensor Auditing",
+        "text": "Detailed inspection of battery thermals, accelerometer, gyroscope, proximity sensors, and touch sampling rates."
+      },
+      {
+        "title": "Kernel & Governor Tuning",
+        "text": "Quickly inspect and apply CPU and GPU governor settings, I/O schedulers, and memory allocation parameters."
+      },
+      {
+        "title": "Cross-Platform Engine",
+        "text": "Built with Flutter for high-framerate rendering across all modern Android versions (Android 8.0+)."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.1",
+    "changelog": [
+      {
+        "version": "v1.0.1",
+        "date": "October 2026",
+        "title": "Toolbox Performance & Compatibility Update",
+        "summary": "Maintenance release resolving partition scanner timeouts on dynamic partition ROMs.",
+        "changes": [
+          "Optimized partition scanner for dynamic partitions (super.img).",
+          "Updated sensor polling frequency for high-refresh 120Hz displays.",
+          "Added one-click bugreport log generator."
+        ]
+      },
+      {
+        "version": "v1.0.0",
+        "date": "September 2026",
+        "title": "Initial Stable Release",
+        "summary": "First official release of POX Toolbox.",
+        "changes": [
+          "Full hardware diagnostics and telemetry dashboard.",
+          "Kernel scheduler and memory inspector."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
+    ],
+    "featured": false,
+    "category": "Tools"
+  },
+  {
+    "id": "disland",
+    "name": "Smart Island (Dynamic Island)",
+    "description": "A lightweight, privacy-first Android overlay that turns notifications, calls, media playback, battery states, timers, stopwatches, and system activities into a floating glanceable Dynamic Island.",
+    "github": "https://github.com/POX-project/disland",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Install Smart Island APK",
+        "instruction": "Download the APK from the project release page and install it on your device.",
+        "command": "adb install smart-island-v7.0.0.apk"
+      },
+      {
+        "step": "02",
+        "title": "Grant Accessibility & Overlay Access",
+        "instruction": "Grant Notification Listener and Display Over Other Apps permissions to allow the floating capsule overlay."
+      },
+      {
+        "step": "03",
+        "title": "Customize Camera Cutout & Position",
+        "instruction": "Adjust island width, height, notch offset, and enable interactive gesture controls."
+      }
+    ],
+    "image": "assets/projects/disland/cover.png",
+    "features": [
+      {
+        "title": "Glanceable Floating Capsule",
+        "text": "Real-time animated capsule showing charging animations, media album art, ongoing timers, and calls."
+      },
+      {
+        "title": "Privacy-First Architecture",
+        "text": "Zero telemetry and no network permissions required; all notification parsing is done locally in-memory."
+      },
+      {
+        "title": "Universal Camera Cutout Calibration",
+        "text": "Fine-grained adjustments for punch-hole center, left, right, and tear-drop notches across all phone models."
+      }
+    ],
+    "screenshots": [],
+    "version": "v7.0.0",
+    "changelog": [
+      {
+        "version": "v7.0.0",
+        "date": "October 2026",
+        "title": "Smart Island v7.0.0 Major Release",
+        "summary": "Massive animation overhaul with fluid physics, live sports scores, and multi-island support.",
+        "changes": [
+          "Rewritten animation physics using custom spring interpolators for seamless capsule expansion.",
+          "Added dual-island display for simultaneous timers and media playback.",
+          "Enhanced notch auto-detection across 200+ popular Android phone models.",
+          "Decreased background idle battery consumption to below 0.3% per day."
+        ]
+      },
+      {
+        "version": "v6.0.0",
+        "date": "August 2026",
+        "title": "Smart Island v6.0.0 Update",
+        "summary": "Dynamic audio visualizer integration and call heads-up controls.",
+        "changes": [
+          "Added live audio spectrum visualizer inside active island capsule.",
+          "Integrated call answer and decline actions directly on the expanded card."
+        ]
+      }
+    ],
+    "maintainers": [
+      "methylphetamine",
+      "POX Community"
+    ],
+    "featured": false,
+    "category": "Overlay"
+  },
+  {
+    "id": "android-test-suite",
+    "name": "Android Test Suite (TSF)",
+    "description": "An automated, asynchronous Android hardware and subsystem diagnostic audit suite with a rich interactive terminal interface (Textual) and headless CI/CLI execution modes.",
+    "github": "https://github.com/POX-project/android-test-suite",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Clone Test Suite Repository",
+        "instruction": "Clone the repository and set up a Python 3.10+ virtual environment.",
+        "command": "git clone https://github.com/POX-project/android-test-suite.git && cd android-test-suite"
+      },
+      {
+        "step": "02",
+        "title": "Install Dependencies",
+        "instruction": "Install the required async testing and Textual UI dependencies.",
+        "command": "pip install -r requirements.txt"
+      },
+      {
+        "step": "03",
+        "title": "Launch Interactive Test Suite",
+        "instruction": "Connect your device via ADB and launch the terminal UI audit runner.",
+        "command": "python -m tsf.app"
+      }
+    ],
+    "image": "assets/projects/android-test-suite/cover.png",
+    "features": [
+      {
+        "title": "Asynchronous Subsystem Auditing",
+        "text": "Concurrent testing of battery charging, thermal throttling, storage I/O, display refresh rate, and CPU frequency scaling."
+      },
+      {
+        "title": "Interactive Textual TUI",
+        "text": "A clean, modern terminal user interface displaying real-time telemetry, pass/fail status, and diagnostic graphs."
+      },
+      {
+        "title": "Headless CI/CLI Automation",
+        "text": "Easily integrated into automated testing pipelines with machine-readable JSON and JUnit XML test reports."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "TSF Diagnostic Audit Suite Launch",
+        "summary": "First production release of the asynchronous Android Test Suite.",
+        "changes": [
+          "Rich interactive terminal user interface built with Textual.",
+          "Asynchronous test runners for battery, sensors, and thermal governors.",
+          "Automated JUnit and JSON report generation for continuous integration."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav",
+      "POX Community"
+    ],
+    "featured": false,
+    "category": "Tools"
+  },
+  {
+    "id": "bootanimation-tool",
+    "name": "POX Bootanimation Tool",
+    "description": "A powerful, rootless generator and packager that converts animated GIFs into Android bootanimation.zip animations for any phone resolution and packages them into recovery-flashable ZIPs.",
+    "github": "https://github.com/POX-project/bootanimation-tool",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Clone Bootanimation Tool",
+        "instruction": "Clone the repository and make the generator script executable.",
+        "command": "git clone https://github.com/POX-project/bootanimation-tool.git && cd bootanimation-tool"
+      },
+      {
+        "step": "02",
+        "title": "Convert GIF to Bootanimation",
+        "instruction": "Run the tool pointing to your source GIF image and desired display resolution.",
+        "command": "python bootanim.py --input animation.gif --width 1080 --height 2340 --fps 60"
+      },
+      {
+        "step": "03",
+        "title": "Flash Generated Package",
+        "instruction": "Flash the output bootanimation-flashable.zip in recovery or push directly with root.",
+        "command": "adb sideload bootanimation-flashable.zip"
+      }
+    ],
+    "image": "assets/projects/bootanimation-tool/cover.png",
+    "features": [
+      {
+        "title": "Resolution & FPS Rescaling",
+        "text": "Automatically rescales frames to standard resolutions (FHD+, QHD+) while preserving exact frame timing."
+      },
+      {
+        "title": "Automated Recovery ZIP Packager",
+        "text": "Bundles generated animations into TWRP/OrangeFox flashable ZIPs with automated backup of existing bootanimations."
+      },
+      {
+        "title": "Zero Compression Zip Packaging",
+        "text": "Correctly outputs store-only (0% compression) zip archives as strictly required by Android surfaceflinger."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Official Generator Release",
+        "summary": "Initial release of POX Bootanimation Tool.",
+        "changes": [
+          "Automated GIF frame extractor and descriptor generator.",
+          "Flashable recovery zip packaging with backup/restore hooks.",
+          "Cross-platform Python 3.8+ compatibility."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav"
+    ],
+    "featured": false,
+    "category": "Tools"
+  },
+  {
+    "id": "romtool",
+    "name": "POX ROM Tool & Repacker",
+    "description": "A high-performance, modular Android ROM unpacker and repacker written in Go, designed for modern Android custom ROMs (Android 10 - 16+), supporting both Dynamic Partitions and Non-Dynamic Partitions.",
+    "github": "https://github.com/POX-project/romtool",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Download romtool Binary",
+        "instruction": "Download the compiled binary for your operating system or compile from source with Go.",
+        "command": "git clone https://github.com/POX-project/romtool.git && cd romtool && go build"
+      },
+      {
+        "step": "02",
+        "title": "Unpack ROM or Super Partition",
+        "instruction": "Extract all system, vendor, and product images from a ROM zip or super.img.",
+        "command": "./romtool unpack --input super.img --output extracted/"
+      },
+      {
+        "step": "03",
+        "title": "Repack Custom ROM",
+        "instruction": "Repack modified partition images back into a clean flashable package.",
+        "command": "./romtool repack --input extracted/ --output custom-rom.zip"
+      }
+    ],
+    "image": "assets/projects/romtool/cover.png",
+    "features": [
+      {
+        "title": "Native Go Speed",
+        "text": "High-speed concurrent block processing written in Go 1.22+ with zero external runtime dependencies."
+      },
+      {
+        "title": "Dynamic Partitions & payload.bin",
+        "text": "Direct unpacking of super.img, dynamic_partitions_op_list, and modern OTA payload.bin files."
+      },
+      {
+        "title": "EROFS & Ext4 Repacking",
+        "text": "Supports uncompressed and compressed image formats including modern Android 13-16 EROFS."
+      }
+    ],
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Initial Go ROM Tool Release",
+        "summary": "Production release of high-performance Android ROM unpacker and repacker in Go.",
+        "changes": [
+          "Native Go implementation of payload.bin extraction.",
+          "Full support for dynamic partitions (super.img).",
+          "Automated flashing script generation for recovery packages."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
+    ],
+    "featured": false,
+    "category": "Tools"
+  },
+  {
+    "id": "poxlogsdumper",
+    "name": "POX Logs Dumper",
+    "description": "Universal custom recovery diagnostic log dumper and troubleshooting collector for all Android devices.",
+    "github": "https://github.com/POX-project/poxlogsdumper",
+    "supportedPhones": [
+      "Generic (Any Android Device)"
+    ],
+    "tutorial": [
+      {
+        "step": "01",
+        "title": "Reboot to Custom Recovery",
+        "instruction": "Boot your device into TWRP, OrangeFox, PBRP, or SHRP recovery.",
+        "command": "adb reboot recovery"
+      },
+      {
+        "step": "02",
+        "title": "Flash Logs Dumper ZIP",
+        "instruction": "Flash the flashable logs dumper ZIP or execute the collector script via ADB.",
+        "command": "adb sideload poxlogsdumper-v2.0.zip"
+      },
+      {
+        "step": "03",
+        "title": "Retrieve Packaged Archive",
+        "instruction": "Pull the created diagnostic tarball from your device storage to share with developers.",
+        "command": "adb pull /sdcard/POX_Logs_Archive.tar.gz"
+      }
+    ],
+    "image": "assets/projects/poxlogsdumper/cover.png",
+    "features": [
+      {
+        "title": "Complete Recovery Log Dump",
+        "text": "Captures /tmp/recovery.log, dmesg, last_kmsg, pstore ramooops, logcat, and mount tables."
+      },
+      {
+        "title": "Hardware & Partition Summary",
+        "text": "Generates a clean text overview of device partitions, dynamic volume layouts, and SoC info."
+      },
+      {
+        "title": "Self-Contained Flashable ZIP",
+        "text": "Runs directly in any recovery without needing an active Android OS or root configuration."
+      }
+    ],
+    "screenshots": [],
+    "version": "v2.0",
+    "changelog": [
+      {
+        "version": "v2.0",
+        "date": "October 2026",
+        "title": "POX Logs Dumper v2.0 Overhaul",
+        "summary": "Major upgrade adding pstore/ramoops dump, dynamic partition inspection, and auto-tarball packaging.",
+        "changes": [
+          "Added automatic ramoops and pstore kernel panic log extractor.",
+          "Included detailed dynamic partition volume tables in summary report.",
+          "Gzip-compressed log bundle created automatically on internal storage."
+        ]
+      },
+      {
+        "version": "v1.0",
+        "date": "September 2026",
+        "title": "Initial Recovery Dumper",
+        "summary": "Basic recovery log collector for TWRP and OrangeFox.",
+        "changes": [
+          "Initial recovery.log and dmesg dump script."
+        ]
+      }
+    ],
+    "maintainers": [
+      "txorav"
+    ],
+    "featured": false,
+    "category": "Tools"
   }
 ]
