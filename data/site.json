@@ -57,7 +57,9 @@
     "tutorial": "Tutorial Step by Step",
     "notFound": "Project not found.",
     "features": "Features",
-    "screenshots": "Screenshots"
+    "screenshots": "Screenshots",
+    "changelog": "Changelog & Releases",
+    "latestVersion": "Latest Version"
   },
   "footer": {
     "note": "Built for stability."

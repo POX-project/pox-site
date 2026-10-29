@@ -48,7 +48,36 @@
         "text": "Tuned energy-aware scheduling, optimized thermal profiles, and 240Hz touch gaming debounce."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.1-Beta",
+    "changelog": [
+      {
+        "version": "v1.0.1-Beta",
+        "date": "October 2026",
+        "title": "Mainline Release with Sultan Debloat, KernelSU-Next & Safe USB 500mA Charging",
+        "summary": "Major stability and performance release featuring Xiaomi Power HAL panic immunization, zero-overhead storage scheduler, and upstream KernelSU-Next legacy driver.",
+        "changes": [
+          "Zero EL1 Aborts: Resolved Xiaomi Power HAL NodeLooperThread fatal panic by preserving sysctl_sched_migration_cost as writable in .data.",
+          "Storage I/O Optimization: Default UFS block storage scheduler tuned to zero-overhead noop for flash memory.",
+          "Motherboard Protection: Standard PC USB host ports clamped to 500mA USB 2.0 SDP to eliminate ADB disconnect loops and protect host motherboards.",
+          "Fast Charging: Full MediaTek Pump Express PE+ 2.0 dual-phase fast charging (up to 3.0A / 18W) on AC chargers.",
+          "KernelSU-Next legacy tip refresh with in-tree SUSFS v2.3.0 path/mount hiding and local SELinux hide backport.",
+          "Zero Frame-Drop Engine: Tuned energy-aware scheduler (EAS) and 240Hz gaming debounce.",
+          "Ported MediaTek VCU and V4L2 Codec2 hardware decoding/encoding engine from S vendor release."
+        ]
+      },
+      {
+        "version": "v1.0.0-Beta",
+        "date": "October 2026",
+        "title": "Initial Mainline Public Beta Release",
+        "summary": "Public beta bringup establishing the Rock Editions kernel matrix on upstreamed Linux 4.14 LTS.",
+        "changes": [
+          "Initial Rock Editions matrix release (Granite, Obsidian, Onyx) for Redmi Note 8 Pro.",
+          "Integrated multi-root support with APatch, KernelSU-Next, and Magisk compatibility.",
+          "Embedded FolkPatch auto-installer inside flashable recovery AnyKernel3 packages."
+        ]
+      }
+    ]
   },
   {
     "id": "pox-kernel-manager",
@@ -93,7 +122,32 @@
         "text": "Operates seamlessly on rooted devices (KernelSU, APatch, Magisk) and clean unrooted ROMs without hanging."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.2.2",
+    "changelog": [
+      {
+        "version": "v1.2.2",
+        "date": "October 2026",
+        "title": "Thermal Telemetry & M3 Expressive Polish",
+        "summary": "Maintenance release improving real-time frequency monitors and Sultan debloat controls.",
+        "changes": [
+          "Live CPU and GPU frequency telemetry per cluster with real-time utilization graphs.",
+          "One-tap toggle for Sultan Debloat governor and energy-aware scheduler modes.",
+          "Charging rate diagnostics showing live mA, mV, battery health, and thermal sensor readouts.",
+          "Updated dark glassmorphic interface to Material 3 Expressive guidelines."
+        ]
+      },
+      {
+        "version": "v1.2.0",
+        "date": "October 2026",
+        "title": "Jetpack Compose 1.7 Modernization",
+        "summary": "Under-the-hood rewrite in pure Kotlin Coroutines and StateFlow.",
+        "changes": [
+          "Root shell executor rewritten with KernelSU, APatch, and Magisk autodetection.",
+          "Reduced background memory footprint to under 18MB with zero wakelocks."
+        ]
+      }
+    ]
   },
   {
     "id": "begotorch",
@@ -137,7 +191,22 @@
         "text": "Direct communication with rootless kernel sysfs nodes for zero-lag hardware brightness control."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Native High-Current Dual-LED Quick Settings Tile",
+        "summary": "First official release unlocking high-current hardware torch modes via native sysfs kernel nodes.",
+        "changes": [
+          "Direct sysfs driver control bypassing vendor Android framework brightness throttling.",
+          "Multi-level brightness adjustments from soft ambient to maximum high-output dual-LED flash.",
+          "Native Android 10-15 Quick Settings Tile with instantaneous haptic feedback.",
+          "Zero background battery drain and minimal standalone binary size."
+        ]
+      }
+    ]
   },
   {
     "id": "toolbox",
@@ -182,7 +251,32 @@
         "text": "Examines physical RAM, ZRAM compression algorithms, swap metrics, and system cache usage."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.1",
+    "changelog": [
+      {
+        "version": "v1.0.1",
+        "date": "October 2026",
+        "title": "Enhanced Storage, Partition & NVRAM Tools",
+        "summary": "Updated CLI toolkit for Android power users and custom ROM developers.",
+        "changes": [
+          "Added raw NVRAM and NVDATA partition backup and integrity verification utilities.",
+          "Integrated battery cycle counter decoder and hardware health inspector.",
+          "Direct modem AT command interface via termux or adb shell for diagnostics.",
+          "Compiled against musl-libc for ultra-compact static multi-call binary."
+        ]
+      },
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Initial Public Release",
+        "summary": "Core system shell utilities and Begonia hardware diagnostic scripts.",
+        "changes": [
+          "Bundled essential toybox/busybox commands optimized for aarch64 Android.",
+          "Added fast memory and storage benchmark subcommands."
+        ]
+      }
+    ]
   },
   {
     "id": "disland",
@@ -227,7 +321,32 @@
         "text": "100% offline, open-source under GPLv3, and verified clean with VirusTotal."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v7.0.0",
+    "changelog": [
+      {
+        "version": "v7.0.0",
+        "date": "October 2026",
+        "title": "Smart Island Profiles, Real-Time Lyrics & Physics Polish",
+        "summary": "Major release introducing dynamic notification islands, music synchronization, and customizable gesture controls.",
+        "changes": [
+          "Configurable Island Profiles with interactive pinch-to-resize and smooth spring physics animations.",
+          "Real-time synchronized music lyrics display supporting Spotify, Apple Music, and local media.",
+          "Incoming and active call state parser with animated live call timer and contact avatar.",
+          "Localized App Shortcuts UI strings and overhauled notification extraction engine."
+        ]
+      },
+      {
+        "version": "v6.0.0",
+        "date": "September 2026",
+        "title": "Dynamic Island Engine 2.0",
+        "summary": "Core architecture overhaul for low latency and OLED burn-in protection.",
+        "changes": [
+          "Micro-shift pixel jitter algorithm to safeguard AMOLED/OLED displays against burn-in.",
+          "Charging animation island with battery percentage, wattage, and temperature."
+        ]
+      }
+    ]
   },
   {
     "id": "bego-docs",
@@ -271,7 +390,22 @@
         "text": "Verified download mirrors and recovery builds (TWRP, OrangeFox, PBRP, SHRP)."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Official Begonia Documentation Web Portal",
+        "summary": "Comprehensive community knowledge base, flashing procedures, and hardware specifications.",
+        "changes": [
+          "Step-by-step flashing guides for custom ROMs, recoveries, and mainline POX kernels.",
+          "Deep search functionality and instant multi-language translation integration.",
+          "Dedicated hard-unbrick recovery portal with SP Flash Tool and bypass authorization guides.",
+          "Complete Begonia partition layout, pinout references, and hardware sensor calibration guides."
+        ]
+      }
+    ]
   },
   {
     "id": "bootanimation-tool",
@@ -318,7 +452,22 @@
         "text": "Built-in resolution presets for Redmi Note 8 Pro, Google Pixel, Samsung Galaxy, POCO, and OnePlus."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Automated Android Boot Animation Converter & Packager",
+        "summary": "First official release of the high-speed boot animation packaging utility.",
+        "changes": [
+          "Automated multi-resolution frame resizing and aspect-ratio preservation from GIF, MP4, or PNG sequences.",
+          "Automatic desc.txt generation with loop count, FPS timing, and part folder structures.",
+          "Zero-compression ZIP packaging strictly compliant with Android boot animation specifications.",
+          "One-click ADB push and live preview on connected Android devices."
+        ]
+      }
+    ]
   },
   {
     "id": "romtool",
@@ -363,7 +512,22 @@
         "text": "Self-contained binaries for lpmake, sload.f2fs, make_ext4fs, and EROFS utilities."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Modular Android Custom ROM Debloater & Porter",
+        "summary": "First official release for ROM maintainers, porters, and custom ROM builders.",
+        "changes": [
+          "Automated payload.bin and super.img sparse extraction into mountable ext4/erofs images.",
+          "Curated debloat presets for MIUI, HyperOS, ColorOS, and Flyme ported bases.",
+          "Dynamic partition resizing utilities for Begonia system, vendor, and product partitions.",
+          "Auto-generates clean flashable updater-script and update-binary packages."
+        ]
+      }
+    ]
   },
   {
     "id": "android-test-suite",
@@ -410,7 +574,22 @@
         "text": "Rich live terminal dashboard built with Textual for interactive diagnostic workflows."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "End-to-End Android Stability & Regression Test Harness",
+        "summary": "Official test suite for ROM, kernel, and driver validation.",
+        "changes": [
+          "Automated ADB execution of memory leak tests, deep sleep suspend/resume cycles, and thermal load.",
+          "Frame rendering time analysis and jank detector with percentile latency reports.",
+          "Automated logcat error scraper with ANR, crash trace, and tombstone parsing.",
+          "Exports interactive HTML validation summaries and benchmark graphs."
+        ]
+      }
+    ]
   },
   {
     "id": "poxlogsdumper",
@@ -457,7 +636,31 @@
         "text": "Compatible with TWRP, OrangeFox, PBRP, SHRP, and LineageOS Recovery."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v2.0",
+    "changelog": [
+      {
+        "version": "v2.0",
+        "date": "October 2026",
+        "title": "Universal Android Diagnostics & One-Click Debug Collector",
+        "summary": "Major version 2.0 release featuring hardware telemetry dumps and sensitive data sanitization.",
+        "changes": [
+          "One-click capture of dmesg, logcat, pstore, last_kmsg, and tombstones into a clean ZIP.",
+          "Hardware telemetry dump: CPU frequency distribution, thermal zone logs, battery health, and memory stats.",
+          "Automatic scrubbing of sensitive identifiers (IMEI, MAC addresses, device serials) for privacy.",
+          "Works in both Android userland (with root) and custom recoveries (TWRP, OrangeFox, PBRP)."
+        ]
+      },
+      {
+        "version": "v1.0.0",
+        "date": "September 2026",
+        "title": "Initial Diagnostic Script Release",
+        "summary": "Basic dmesg and logcat capture for recovery environments.",
+        "changes": [
+          "Initial shell script for capturing recovery logs and kernel crashes."
+        ]
+      }
+    ]
   },
   {
     "id": "pox-imei-fixer",
@@ -503,7 +706,31 @@
         "text": "Flashes in recovery or installs as a module in KernelSU, APatch, and Magisk."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.1.0",
+    "changelog": [
+      {
+        "version": "v1.1.0",
+        "date": "October 2026",
+        "title": "Universal Modem IMEI, Baseband & VoLTE Restoration Tool",
+        "summary": "Enhanced cellular baseband repair tool with dynamic SIM slot routing and SELinux policies.",
+        "changes": [
+          "Universal recovery and root-manager installation flows with strict NVRAM validation.",
+          "Dynamic active SIM slot routing for reliable VoLTE and Carrier Aggregation on both slots.",
+          "VoLTE/IMS property injection, SELinux policy fixes, and NVDATA permission repairs.",
+          "Hardware write-protection checks to eliminate risk of baseband corruption."
+        ]
+      },
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Initial Cellular Baseband Fixer",
+        "summary": "First release addressing MediaTek Begonia NVRAM corrupted partition warnings.",
+        "changes": [
+          "Automated fix for ERROR 0x10 NVRAM WARNING in Wi-Fi and Bluetooth settings."
+        ]
+      }
+    ]
   },
   {
     "id": "android_vendor_redmi_begonia",
@@ -548,7 +775,22 @@
         "text": "Reverse-engineered C/C++ source code, Bionic compatibility shims, and Soong build definitions."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Unified Begonia Device Tree & Proprietary Vendor Blobs",
+        "summary": "Production-ready vendor tree for Android 14 and 15 custom ROM bringup.",
+        "changes": [
+          "Unified Goodix and FPC fingerprint HAL integration with instant wake-on-tap.",
+          "Native AIDL lights, consumer IR, and vibrator HAL implementations.",
+          "Bundled Image.gz-dtb kernel support with TWRP/OrangeFox Magisk flashing compatibility.",
+          "Removed legacy GKI dependencies and standardized modern Android.bp build modules."
+        ]
+      }
+    ]
   },
   {
     "id": "pox-begonia-kernel-benchmark",
@@ -594,6 +836,21 @@
         "text": "Generates detailed markdown summaries and JSON metric archives to validate kernel modifications."
       }
     ],
-    "screenshots": []
+    "screenshots": [],
+    "version": "v1.0.0",
+    "changelog": [
+      {
+        "version": "v1.0.0",
+        "date": "October 2026",
+        "title": "Automated Continuous Kernel Performance & Benchmark Harness",
+        "summary": "Official benchmarking framework for Begonia kernel testing and regression analysis.",
+        "changes": [
+          "Established 1.0.0 Sultan baseline metrics across 23 continuous passes (311s duration).",
+          "Automated latency tests verifying 8.86 µs context switch and 0.10 ms process fork speed.",
+          "Memory throughput measurement validating 6,310 MB/s sustained LPDDR4X bandwidth.",
+          "Automatic enforcement of noop I/O scheduler and dynamic fsync during benchmark runs."
+        ]
+      }
+    ]
   }
 ]

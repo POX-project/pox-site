@@ -129,12 +129,12 @@ function renderDevices(devices, projects) {
 function renderRows(projects, L) {
   $('#projectsWrap').innerHTML = `<div class="list">${projects.map((p, i) => `
     <article class="row rv" style="--d:${i * .1}s" tabindex="0">
-      <span class="name">${esc(p.name)}</span>
+      <div class="row-head"><span class="name">${esc(p.name)}</span>${p.version ? `<span class="v-tag sm">${esc(p.version)}</span>` : ''}</div>
       <div class="reveal"><div class="rin"><div class="panel">
         ${box(p.image, p.name, ini(p.name), 'pimg')}
         <div class="info">
           <p>${esc(p.description)}</p>
-          <div class="chips">${chipsHtml(p.supportedPhones)}</div>
+          <div class="chips">${p.version ? `<span class="chip v-chip">${esc(p.version)}</span>` : ''}${chipsHtml(p.supportedPhones)}</div>
         </div>
         <a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a>
       </div></div></div>
@@ -155,7 +155,7 @@ function renderPicker(projects, L) {
   const showDetail = i => {
     const p = projects[i];
     det.innerHTML = `${box(p.image, p.name, ini(p.name), 'pimg')}<p class="pd-desc">${esc(p.description)}</p>
-      <div class="chips">${chipsHtml(p.supportedPhones)}</div>
+      <div class="chips">${p.version ? `<span class="chip v-chip">${esc(p.version)}</span>` : ''}${chipsHtml(p.supportedPhones)}</div>
       <div><a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a></div>`;
     det.classList.remove('swap'); void det.offsetWidth; det.classList.add('swap');
   };
@@ -288,13 +288,16 @@ function renderProject({ site, projects }) {
     el.innerHTML = `<section class="dsec" data-theme="indigo"><div class="wrap"><a class="btn mint back" href="index.html#projects">${esc(L.back)}</a><p class="nf" style="margin-top:3rem">${esc(L.notFound)}</p></div></section>`;
     return;
   }
-  const feats = p.features || [], shots = p.screenshots || [];
+  const feats = p.features || [], shots = p.screenshots || [], logs = p.changelog || [];
   document.title = `${site.name} — ${p.name}`;
   el.innerHTML = `
   <section class="dsec" data-theme="indigo"><div class="wrap">
     <a class="btn mint back" href="index.html#projects">${esc(L.back)}</a>
     <div class="d-head">
-      <h1 aria-label="${esc(p.name)}">${chars(p.name)}</h1>
+      <div class="d-title-wrap">
+        <h1 aria-label="${esc(p.name)}">${chars(p.name)}</h1>
+        ${p.version ? `<span class="v-tag" title="${esc(L.latestVersion || 'Latest Version')}">${esc(p.version)}</span>` : ''}
+      </div>
       <a class="btn coral" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(L.github)} <span class="arr">↗</span></a>
     </div>
     ${box(p.image, p.name, ini(p.name), 'cover rv')}
@@ -312,6 +315,27 @@ function renderProject({ site, projects }) {
   ${shots.length ? `<section class="dsec" data-theme="indigo"><div class="wrap">
     <h2 class="k rv">${esc(L.screenshots)}</h2>
     <div class="shots" id="shots">${shots.map((s, i) => box(s, `${p.name} screenshot ${i + 1}`, i + 1, 'shot rv').replace('class="ph ', `style="--d:${i * .08}s" class="ph `)).join('')}</div>
+  </div></section>` : ''}
+  ${logs.length ? `<section class="dsec" data-theme="indigo" id="changelog"><div class="wrap">
+    <div class="d-sec-head rv">
+      <h2 class="k">${esc(L.changelog || 'Changelog & Releases')}</h2>
+      ${p.version ? `<span class="cl-latest-pill">${esc(p.version)}</span>` : ''}
+    </div>
+    <div class="changelogs">${logs.map((entry, i) => `
+      <article class="cl-entry rv" style="--d:${i * .08}s">
+        <div class="cl-header">
+          <div class="cl-badge-group">
+            <span class="cl-ver">${esc(entry.version)}</span>
+            ${entry.date ? `<time class="cl-date">${esc(entry.date)}</time>` : ''}
+          </div>
+          ${entry.title || entry.summary ? `<h3 class="cl-title">${esc(entry.title || entry.summary)}</h3>` : ''}
+        </div>
+        ${entry.summary && entry.title && entry.summary !== entry.title ? `<p class="cl-summary">${esc(entry.summary)}</p>` : ''}
+        ${entry.changes && entry.changes.length ? `
+          <ul class="cl-items">
+            ${entry.changes.map(ch => `<li><span class="cl-bullet" aria-hidden="true">›</span><span>${esc(ch)}</span></li>`).join('')}
+          </ul>` : ''}
+      </article>`).join('')}</div>
   </div></section>` : ''}
   <section class="dsec" data-theme="light"><div class="wrap">
     <div class="sec rv">
