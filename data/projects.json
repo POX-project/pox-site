@@ -77,6 +77,9 @@
           "Embedded FolkPatch auto-installer inside flashable recovery AnyKernel3 packages."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav"
     ]
   },
   {
@@ -147,6 +150,10 @@
           "Reduced background memory footprint to under 18MB with zero wakelocks."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
     ]
   },
   {
@@ -206,6 +213,9 @@
           "Zero background battery drain and minimal standalone binary size."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav"
     ]
   },
   {
@@ -276,6 +286,10 @@
           "Added fast memory and storage benchmark subcommands."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
     ]
   },
   {
@@ -346,6 +360,10 @@
           "Charging animation island with battery percentage, wattage, and temperature."
         ]
       }
+    ],
+    "maintainers": [
+      "methylphetamine",
+      "POX Community"
     ]
   },
   {
@@ -405,6 +423,10 @@
           "Complete Begonia partition layout, pinout references, and hardware sensor calibration guides."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav",
+      "POX Community"
     ]
   },
   {
@@ -467,6 +489,9 @@
           "One-click ADB push and live preview on connected Android devices."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav"
     ]
   },
   {
@@ -527,6 +552,10 @@
           "Auto-generates clean flashable updater-script and update-binary packages."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
     ]
   },
   {
@@ -589,6 +618,10 @@
           "Exports interactive HTML validation summaries and benchmark graphs."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav",
+      "POX Community"
     ]
   },
   {
@@ -660,6 +693,9 @@
           "Initial shell script for capturing recovery logs and kernel crashes."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav"
     ]
   },
   {
@@ -730,6 +766,9 @@
           "Automated fix for ERROR 0x10 NVRAM WARNING in Wi-Fi and Bluetooth settings."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav"
     ]
   },
   {
@@ -790,6 +829,10 @@
           "Removed legacy GKI dependencies and standardized modern Android.bp build modules."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav",
+      "methylphetamine"
     ]
   },
   {
@@ -851,6 +894,9 @@
           "Automatic enforcement of noop I/O scheduler and dynamic fsync during benchmark runs."
         ]
       }
+    ],
+    "maintainers": [
+      "txorav"
     ]
   }
 ]

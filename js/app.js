@@ -20,6 +20,36 @@ const chipsHtml = a => a.map((x, j) => `<span class="chip" style="--i:${j}">${es
 const box = (src, alt, label, cls = '') =>
   `<figure class="ph ${cls}">${label ? `<span class="ph-i">${esc(label)}</span>` : ''}${src ? `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" onerror="this.remove()">` : ''}</figure>`;
 const projectUrl = p => `project.html?id=${encodeURIComponent(p.id)}`;
+const getMaintainers = (p, maintainers = []) => {
+  const names = Array.isArray(p.maintainers) ? p.maintainers
+    : p.maintainer ? [p.maintainer] : [];
+  return names.map(n => {
+    const m = (maintainers || []).find(x => (x.name || '').toLowerCase() === String(n).toLowerCase());
+    if (m) {
+      const gh = (m.socials || []).find(s => (s.label || '').toLowerCase() === 'github')?.url || 'https://github.com/POX-project';
+      return { name: m.name, image: m.image, github: gh };
+    }
+    return { name: n, image: 'assets/maintainers/poxlogo.png', github: 'https://github.com/POX-project' };
+  });
+};
+const maintainerBadgesHtml = (p, maintainers = [], sm = false) => {
+  const list = getMaintainers(p, maintainers);
+  if (!list.length) return '';
+  return `<div class="p-m-list">${list.map(m => `
+    <a class="p-m-link${sm ? ' sm' : ''}" href="${esc(m.github)}" target="_blank" rel="noopener noreferrer" title="View ${esc(m.name)} on GitHub">
+      <img class="p-m-pfp" src="${esc(m.image)}" alt="${esc(m.name)}" loading="lazy">
+      <span class="p-m-name">${esc(m.name)}</span>
+      ${sm ? '' : '<span class="p-m-arr" aria-hidden="true">↗</span>'}
+    </a>`).join('')}</div>`;
+};
+const maintainerRowHtml = (p, maintainers, label = 'Maintainer') => {
+  const list = getMaintainers(p, maintainers);
+  if (!list.length) return '';
+  return `<div class="p-maintainer-row rv">
+    <span class="p-m-label">${esc(label)}:</span>
+    ${maintainerBadgesHtml(p, maintainers)}
+  </div>`;
+};
 let D, words = [], ticking = false, lastWordCount = -1;
 
 /* ---------- helpers ---------- */
@@ -126,7 +156,7 @@ function renderDevices(devices, projects) {
 }
 
 /* ---------- home ---------- */
-function renderRows(projects, L) {
+function renderRows(projects, L, maintainers) {
   $('#projectsWrap').innerHTML = `<div class="list">${projects.map((p, i) => `
     <article class="row rv" style="--d:${i * .1}s" tabindex="0">
       <div class="row-head"><span class="name">${esc(p.name)}</span>${p.version ? `<span class="v-tag sm">${esc(p.version)}</span>` : ''}</div>
@@ -134,6 +164,11 @@ function renderRows(projects, L) {
         ${box(p.image, p.name, ini(p.name), 'pimg')}
         <div class="info">
           <p>${esc(p.description)}</p>
+          ${getMaintainers(p, maintainers).length ? `
+          <div class="panel-m">
+            <span class="pm-lbl">${esc(L.maintainer || 'Maintainer')}:</span>
+            ${maintainerBadgesHtml(p, maintainers, true)}
+          </div>` : ''}
           <div class="chips">${p.version ? `<span class="chip v-chip">${esc(p.version)}</span>` : ''}${chipsHtml(p.supportedPhones)}</div>
         </div>
         <a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a>
@@ -142,7 +177,7 @@ function renderRows(projects, L) {
 }
 
 /* 3D infinite wheel picker (used when there are many projects) */
-function renderPicker(projects, L) {
+function renderPicker(projects, L, maintainers) {
   const N = projects.length, STEP = 26;
   $('#projectsWrap').innerHTML = `<div class="picker rv">
     <div class="wheel" id="wheel" tabindex="0" role="listbox" aria-label="Projects">
@@ -155,6 +190,11 @@ function renderPicker(projects, L) {
   const showDetail = i => {
     const p = projects[i];
     det.innerHTML = `${box(p.image, p.name, ini(p.name), 'pimg')}<p class="pd-desc">${esc(p.description)}</p>
+      ${getMaintainers(p, maintainers).length ? `
+      <div class="pd-m">
+        <span class="pm-lbl">${esc(L.maintainer || 'Maintainer')}:</span>
+        ${maintainerBadgesHtml(p, maintainers, true)}
+      </div>` : ''}
       <div class="chips">${p.version ? `<span class="chip v-chip">${esc(p.version)}</span>` : ''}${chipsHtml(p.supportedPhones)}</div>
       <div><a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a></div>`;
     det.classList.remove('swap'); void det.offsetWidth; det.classList.add('swap');
@@ -262,7 +302,7 @@ function renderHome({ site, projects, maintainers, devices }) {
 
   const min = (site.picker && site.picker.minProjects) || 5;
   const usePicker = projects.length > min && !reduce && matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)').matches;
-  if (usePicker) renderPicker(projects, site.labels); else renderRows(projects, site.labels);
+  if (usePicker) renderPicker(projects, site.labels, maintainers); else renderRows(projects, site.labels, maintainers);
   renderDevices(devices, projects);
 
   /* Maintainers: a strip of tall portraits with rotated names; the hovered one widens, the name straightens, and the profile appears. */
@@ -281,7 +321,7 @@ function renderHome({ site, projects, maintainers, devices }) {
 }
 
 /* ---------- project page ---------- */
-function renderProject({ site, projects }) {
+function renderProject({ site, projects, maintainers }) {
   const L = site.labels, el = $('#detail');
   const p = projects.find(x => x.id === new URLSearchParams(location.search).get('id'));
   if (!p) {
@@ -289,6 +329,7 @@ function renderProject({ site, projects }) {
     return;
   }
   const feats = p.features || [], shots = p.screenshots || [], logs = p.changelog || [];
+  const pms = getMaintainers(p, maintainers);
   document.title = `${site.name} — ${p.name}`;
   el.innerHTML = `
   <section class="dsec" data-theme="indigo"><div class="wrap">
@@ -300,11 +341,19 @@ function renderProject({ site, projects }) {
       </div>
       <a class="btn coral" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(L.github)} <span class="arr">↗</span></a>
     </div>
+    ${maintainerRowHtml(p, maintainers, L.maintainer || 'Maintainer')}
     ${box(p.image, p.name, ini(p.name), 'cover rv')}
     <div class="sec rv"><p class="d-desc">${esc(p.description)}</p></div>
-    <div class="sec rv">
-      <h2 class="k">${esc(L.phones)}</h2>
-      <div class="chips">${chipsHtml(p.supportedPhones)}</div>
+    <div class="sec rv d-meta-grid">
+      ${pms.length ? `
+      <div class="d-meta-col">
+        <h2 class="k">${esc(L.maintainer || 'Maintainer')}</h2>
+        ${maintainerBadgesHtml(p, maintainers)}
+      </div>` : ''}
+      <div class="d-meta-col">
+        <h2 class="k">${esc(L.phones)}</h2>
+        <div class="chips">${chipsHtml(p.supportedPhones)}</div>
+      </div>
     </div>
   </div></section>
   ${feats.length ? `<section class="dsec" data-theme="mint"><div class="wrap">

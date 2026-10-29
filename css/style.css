@@ -149,6 +149,27 @@ a{color:inherit;text-decoration:none}
 .v-tag{display:inline-flex;align-items:center;padding:4px 12px;border-radius:9999px;font-size:clamp(.75rem,1.2vw,.88rem);font-weight:700;letter-spacing:.04em;background:var(--coral);color:var(--light);border:0;vertical-align:middle;text-transform:none;line-height:1.2;transition:transform .2s var(--ease),background-color .2s}
 .v-tag:hover{background:var(--mint);color:var(--navy);transform:translateY(-2px)}
 .v-tag.sm{padding:2px 8px;font-size:.72rem}
+
+/* MAINTAINER BADGES & LINKS (Simple flat style) */
+.p-maintainer-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:1.8rem 0 2.2rem}
+.p-m-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;font-weight:600;color:var(--a)}
+.p-m-list{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.p-m-link{display:inline-flex;align-items:center;gap:10px;padding:4px 14px 4px 5px;border-radius:9999px;background:var(--chip-bg);color:var(--chip-fg);text-decoration:none;font-weight:700;font-size:.85rem;letter-spacing:.02em;border:0;transition:transform .2s var(--ease),background-color .2s,color .2s}
+.p-m-link:hover{background:var(--mint);color:var(--navy);transform:translateY(-2px)}
+.p-m-pfp{width:32px;height:32px;border-radius:9999px;object-fit:cover;display:block;flex-shrink:0;background:var(--navy);transition:transform .2s var(--ease)}
+.p-m-link:hover .p-m-pfp{transform:scale(1.08)}
+.p-m-name{line-height:1}
+.p-m-arr{font-size:.9rem;opacity:.75;transition:transform .2s var(--ease)}
+.p-m-link:hover .p-m-arr{transform:translate(2px,-2px);opacity:1}
+.p-m-link.sm{padding:3px 10px 3px 4px;font-size:.76rem;gap:8px}
+.p-m-link.sm .p-m-pfp{width:24px;height:24px}
+
+.d-meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2.2rem 3rem}
+.d-meta-col{display:flex;flex-direction:column;gap:1.2rem}
+.d-meta-col .k{margin-bottom:0}
+.panel-m,.pd-m{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:.4rem}
+.pm-lbl{font-size:.78rem;text-transform:uppercase;letter-spacing:.15em;font-weight:600;color:var(--a)}
+
 .sec{position:relative;padding:3rem 0}
 .sec::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:currentColor;opacity:.2;transform:scaleX(0);transform-origin:left;transition:transform 1.3s var(--ease)}
 .sec.in::before{transform:scaleX(1)}

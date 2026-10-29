@@ -59,7 +59,8 @@
     "features": "Features",
     "screenshots": "Screenshots",
     "changelog": "Changelog & Releases",
-    "latestVersion": "Latest Version"
+    "latestVersion": "Latest Version",
+    "maintainer": "Maintainer"
   },
   "footer": {
     "note": "Built for stability."
