@@ -8,5 +8,10 @@
     "name": "Galaxy M20",
     "manufacturer": "Samsung",
     "codename": "m20lte"
+  },
+  {
+    "name": "Generic (Any Android Device)",
+    "manufacturer": "Universal",
+    "codename": "generic"
   }
 ]

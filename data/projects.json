@@ -90,6 +90,7 @@
     "description": "The official companion Android application for Pox Kernel on Redmi Note 8 Pro, built with pure Jetpack Compose, Kotlin Coroutines, and Material 3 Expressive guidelines.",
     "github": "https://github.com/POX-project/pox-kernel-manager",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
       "All POX Kernel Devices"
     ],
@@ -230,9 +231,9 @@
     "description": "Universal Android diagnostics, hardware telemetry, partition manager, and power tools suite designed for custom ROMs, kernels, and everyday power users.",
     "github": "https://github.com/POX-project/toolbox",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)",
-      "All Android Devices"
+      "Galaxy M20 (m20lte)"
     ],
     "tutorial": [
       {
@@ -306,9 +307,9 @@
     "description": "A modern, lightweight, privacy-first Android overlay that turns notifications, media playback, incoming calls, timers, and battery states into a fluid floating Dynamic Island.",
     "github": "https://github.com/POX-project/disland",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)",
-      "All Android Devices"
+      "Galaxy M20 (m20lte)"
     ],
     "tutorial": [
       {
@@ -447,9 +448,9 @@
     "description": "An automated generator and packager that converts animated GIFs and videos into compliant Android boot animations, creating recovery-flashable ZIPs with automated backup and restore.",
     "github": "https://github.com/POX-project/bootanimation-tool",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)",
-      "All Android Devices"
+      "Galaxy M20 (m20lte)"
     ],
     "tutorial": [
       {
@@ -514,6 +515,7 @@
     "description": "A high-performance modular Android custom ROM unpacker and repacker written in Go for Android 10 through 16+, supporting Dynamic Partitions (super.img, payload.bin) and JSON state tracking.",
     "github": "https://github.com/POX-project/romtool",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
       "All Dynamic Partition Devices"
     ],
@@ -580,9 +582,9 @@
     "description": "An automated, asynchronous Android hardware and subsystem diagnostic audit suite featuring an interactive Textual terminal UI and headless CI/CLI execution modes.",
     "github": "https://github.com/POX-project/android-test-suite",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
-      "Galaxy M20 (m20lte)",
-      "All Android Devices"
+      "Galaxy M20 (m20lte)"
     ],
     "tutorial": [
       {
@@ -648,6 +650,7 @@
     "description": "A high-performance diagnostic log collector for custom recoveries (TWRP, OrangeFox, PBRP, SHRP) that packages every system and kernel log into a single timestamped archive.",
     "github": "https://github.com/POX-project/poxlogsdumper",
     "supportedPhones": [
+      "Generic (Any Android Device)",
       "Redmi Note 8 Pro (begonia)",
       "Galaxy M20 (m20lte)",
       "All Custom Recovery Devices"

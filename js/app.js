@@ -124,11 +124,17 @@ function renderChrome(site) {
 }
 
 /* ---------- devices ---------- */
-/* A project supports a device when any supportedPhones entry contains the device name or its codename as a whole word. */
 function projectsForDevice(d, projects) {
   const name = d.name.toLowerCase();
   const code = new RegExp(`(^|[^a-z0-9])${d.codename.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z0-9]|$)`);
-  return projects.filter(p => (p.supportedPhones || []).some(s => { const t = s.toLowerCase(); return t.includes(name) || code.test(t); }));
+  const isGeneric = d.codename === 'generic' || name.includes('generic');
+  return projects.filter(p => (p.supportedPhones || []).some(s => {
+    const t = s.toLowerCase();
+    if (isGeneric && (t.includes('generic') || t.includes('any android') || t.includes('all android') || t.includes('universal'))) {
+      return true;
+    }
+    return t.includes(name) || code.test(t);
+  }));
 }
 
 function renderDevices(devices, projects) {
