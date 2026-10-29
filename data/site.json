@@ -1,7 +1,7 @@
 {
   "name": "POX",
   "subtitle": "stability and maintenance for old devices, daily drive your old device",
-  "logo": "assets/logo.svg",
+  "logo": "assets/poxlogo.png",
   "navigation": [
     {
       "label": "Home",
@@ -35,7 +35,7 @@
     }
   },
   "about": {
-    "storyLiner": "Born from frustration with bloated, unstable custom builds, POX started with a single philosophy: strip away the noise and engineer rock-solid daily reliability. Every kernel patch, system service, and device tree in the POX ecosystem is audited for thermal efficiency, battery longevity, and zero-crash uptime."
+    "storyLiner": "well to be honest we started from same spot where we needed features and we couldnt find anyone with those so we decided to make own version of everything so we revivied our devices community , ( its fun we had so much running in unexpected places if you enjoy 69 features come here ) "
   },
   "socials": [
     { "label": "GitHub", "url": "https://github.com/pox-project" },
