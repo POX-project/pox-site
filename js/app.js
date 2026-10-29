@@ -301,7 +301,7 @@ function renderHome({ site, projects, maintainers, devices }) {
   words = $$('.w');
 
   const min = (site.picker && site.picker.minProjects) || 5;
-  const usePicker = projects.length > min && !reduce && matchMedia('(min-width: 901px) and (hover: hover) and (pointer: fine)').matches;
+  const usePicker = projects.length > min;
   if (usePicker) renderPicker(projects, site.labels, maintainers); else renderRows(projects, site.labels, maintainers);
   renderDevices(devices, projects);
 
