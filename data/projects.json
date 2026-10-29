@@ -80,7 +80,9 @@
     ],
     "maintainers": [
       "txorav"
-    ]
+    ],
+    "featured": true,
+    "category": "Kernel"
   },
   {
     "id": "pox-kernel-manager",
@@ -154,7 +156,9 @@
     "maintainers": [
       "txorav",
       "methylphetamine"
-    ]
+    ],
+    "featured": true,
+    "category": "App"
   },
   {
     "id": "begotorch",
@@ -216,7 +220,9 @@
     ],
     "maintainers": [
       "txorav"
-    ]
+    ],
+    "featured": true,
+    "category": "Utility"
   },
   {
     "id": "toolbox",
@@ -290,7 +296,9 @@
     "maintainers": [
       "txorav",
       "methylphetamine"
-    ]
+    ],
+    "featured": true,
+    "category": "CLI Tool"
   },
   {
     "id": "disland",
@@ -364,7 +372,9 @@
     "maintainers": [
       "methylphetamine",
       "POX Community"
-    ]
+    ],
+    "featured": true,
+    "category": "App"
   },
   {
     "id": "bego-docs",
@@ -427,7 +437,9 @@
     "maintainers": [
       "txorav",
       "POX Community"
-    ]
+    ],
+    "featured": false,
+    "category": "Docs"
   },
   {
     "id": "bootanimation-tool",
@@ -492,7 +504,9 @@
     ],
     "maintainers": [
       "txorav"
-    ]
+    ],
+    "featured": false,
+    "category": "CLI Tool"
   },
   {
     "id": "romtool",
@@ -556,7 +570,9 @@
     "maintainers": [
       "txorav",
       "methylphetamine"
-    ]
+    ],
+    "featured": false,
+    "category": "ROM Tool"
   },
   {
     "id": "android-test-suite",
@@ -622,7 +638,9 @@
     "maintainers": [
       "txorav",
       "POX Community"
-    ]
+    ],
+    "featured": false,
+    "category": "Testing"
   },
   {
     "id": "poxlogsdumper",
@@ -696,7 +714,9 @@
     ],
     "maintainers": [
       "txorav"
-    ]
+    ],
+    "featured": false,
+    "category": "Utility"
   },
   {
     "id": "pox-imei-fixer",
@@ -769,7 +789,9 @@
     ],
     "maintainers": [
       "txorav"
-    ]
+    ],
+    "featured": false,
+    "category": "Utility"
   },
   {
     "id": "android_vendor_redmi_begonia",
@@ -833,7 +855,9 @@
     "maintainers": [
       "txorav",
       "methylphetamine"
-    ]
+    ],
+    "featured": false,
+    "category": "Device Tree"
   },
   {
     "id": "pox-begonia-kernel-benchmark",
@@ -889,7 +913,7 @@
         "summary": "Official benchmarking framework for Begonia kernel testing and regression analysis.",
         "changes": [
           "Established 1.0.0 Sultan baseline metrics across 23 continuous passes (311s duration).",
-          "Automated latency tests verifying 8.86 µs context switch and 0.10 ms process fork speed.",
+          "Automated latency tests verifying 8.86 \u00b5s context switch and 0.10 ms process fork speed.",
           "Memory throughput measurement validating 6,310 MB/s sustained LPDDR4X bandwidth.",
           "Automatic enforcement of noop I/O scheduler and dynamic fsync during benchmark runs."
         ]
@@ -897,6 +921,8 @@
     ],
     "maintainers": [
       "txorav"
-    ]
+    ],
+    "featured": false,
+    "category": "Benchmark"
   }
 ]

@@ -102,6 +102,9 @@ function renderChrome(site) {
   if (page === 'devices') {
     const deviceLink = $('.nav-link[href="index.html#devices"]');
     if (deviceLink) { deviceLink.href = 'devices.html'; deviceLink.classList.add('active'); deviceLink.setAttribute('aria-current', 'page'); }
+  } else if (page === 'projects') {
+    const projLink = $('.nav-link[href="index.html#projects"]');
+    if (projLink) { projLink.href = 'projects.html'; projLink.classList.add('active'); projLink.setAttribute('aria-current', 'page'); }
   }
 
   const rq = site.ctas.request, dn = site.ctas.donation;
@@ -173,7 +176,9 @@ function renderRows(projects, L, maintainers) {
         </div>
         <a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a>
       </div></div></div>
-    </article>`).join('')}</div>`;
+    </article>`).join('')}
+    <div style="text-align:center;padding:2.5rem 0 1rem"><a class="device-link" href="projects.html">Explore all projects catalog <span aria-hidden="true">↗</span></a></div>
+  </div>`;
 }
 
 /* 3D infinite wheel picker (used when there are many projects) */
@@ -196,7 +201,8 @@ function renderPicker(projects, L, maintainers) {
         ${maintainerBadgesHtml(p, maintainers, true)}
       </div>` : ''}
       <div class="chips">${p.version ? `<span class="chip v-chip">${esc(p.version)}</span>` : ''}${chipsHtml(p.supportedPhones)}</div>
-      <div><a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a></div>`;
+      <div><a class="btn go" href="${projectUrl(p)}">${esc(p.name)} ${esc(L.projectPage)} <span class="arr">→</span></a></div>
+      <div style="margin-top:12px"><a class="device-link" href="projects.html">Explore all projects catalog <span aria-hidden="true">↗</span></a></div>`;
     det.classList.remove('swap'); void det.offsetWidth; det.classList.add('swap');
   };
 
@@ -318,6 +324,137 @@ function renderHome({ site, projects, maintainers, devices }) {
       <h3 class="mp-name">${esc(o.name)}</h3>
     </article>`;
   }).join('');
+}
+
+/* ---------- projects catalog page ---------- */
+function renderProjectsPage({ site, projects, maintainers }) {
+  const L = site.labels, el = $('#projectsPage');
+  if (!el) return;
+  document.title = `${site.name} — ${L.allProjects || 'All Projects'}`;
+
+  const featured = projects.filter(p => p.featured);
+  const latestUpdated = [...projects].filter(p => p.changelog && p.changelog.length).sort((a, b) => {
+    const da = a.changelog[0]?.date || '', db = b.changelog[0]?.date || '';
+    return db.localeCompare(da);
+  });
+
+  const categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
+
+  const renderCard = (p, isRow = false) => `
+    <article class="${isRow ? 'pj-row-card' : 'pj-grid-card'} rv">
+      <div class="pj-thumb">${box(p.image, p.name, ini(p.name), 'pimg')}</div>
+      <div class="pj-card-top">
+        <h3 class="pj-card-title"><a href="${projectUrl(p)}">${esc(p.name)}</a></h3>
+        <div style="display:flex;align-items:center;gap:6px">
+          ${p.category ? `<span class="pj-cat-badge">${esc(p.category)}</span>` : ''}
+          ${p.version ? `<span class="v-tag sm">${esc(p.version)}</span>` : ''}
+        </div>
+      </div>
+      <p class="pj-card-desc">${esc(p.description)}</p>
+      <div class="pj-card-meta">
+        ${getMaintainers(p, maintainers).length ? `
+        <div class="panel-m">
+          <span class="pm-lbl">${esc(L.maintainer || 'Maintainer')}:</span>
+          ${maintainerBadgesHtml(p, maintainers, true)}
+        </div>` : ''}
+        <div class="chips">${chipsHtml(p.supportedPhones || [])}</div>
+      </div>
+      <div class="pj-card-actions">
+        <a class="btn go" href="${projectUrl(p)}">${esc(L.projectPage || 'Page')} <span class="arr">→</span></a>
+        ${p.github ? `<a class="btn coral" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(L.github || 'GitHub')} <span class="arr">↗</span></a>` : ''}
+      </div>
+    </article>
+  `;
+
+  el.innerHTML = `
+    <div class="pj-page wrap">
+      <section class="pj-hero rv">
+        <p class="eyebrow">POX Ecosystem</p>
+        <h1>${esc(L.allProjects || 'All Projects')}.</h1>
+        <p>Explore custom Linux kernels, Android system managers, CLI toolsets, and device trees built for daily-driver stability.</p>
+      </section>
+
+      ${featured.length ? `
+      <section class="pj-section rv">
+        <div class="pj-section-head">
+          <div class="pj-title-wrap">
+            <h2>${esc(L.featuredProjects || 'Featured Projects')}</h2>
+            <span class="pj-badge">${featured.length}</span>
+          </div>
+          <span class="pj-hint">Scroll or drag to browse</span>
+        </div>
+        <div class="pj-row-scroller" id="scrollerFeatured">
+          ${featured.map(p => renderCard(p, true)).join('')}
+        </div>
+      </section>` : ''}
+
+      ${latestUpdated.length ? `
+      <section class="pj-section rv">
+        <div class="pj-section-head">
+          <div class="pj-title-wrap">
+            <h2>${esc(L.latestUpdated || 'Latest Updated')}</h2>
+            <span class="pj-badge">${latestUpdated.length}</span>
+          </div>
+          <span class="pj-hint">Recent releases &amp; changelogs</span>
+        </div>
+        <div class="pj-row-scroller" id="scrollerLatest">
+          ${latestUpdated.map(p => renderCard(p, true)).join('')}
+        </div>
+      </section>` : ''}
+
+      <section class="pj-section rv" id="allProjectsSection">
+        <div class="pj-section-head">
+          <div class="pj-title-wrap">
+            <h2>All Projects Catalog</h2>
+            <span class="pj-badge" id="pjCount">${projects.length}</span>
+          </div>
+        </div>
+        <div class="pj-filter-bar" id="pjFilterBar">
+          ${categories.map((c, i) => `<button class="pj-filter-btn${i === 0 ? ' active' : ''}" type="button" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
+        </div>
+        <div class="pj-grid" id="pjGrid">
+          ${projects.map(p => renderCard(p, false)).join('')}
+        </div>
+      </section>
+    </div>
+  `;
+
+  const enableDrag = scroller => {
+    if (!scroller) return;
+    let isDown = false, startX, scrollLeft;
+    scroller.addEventListener('pointerdown', e => {
+      if (e.pointerType !== 'mouse') return;
+      isDown = true;
+      startX = e.pageX - scroller.offsetLeft;
+      scrollLeft = scroller.scrollLeft;
+      scroller.style.scrollSnapType = 'none';
+    });
+    addEventListener('pointermove', e => {
+      if (!isDown) return;
+      const x = e.pageX - scroller.offsetLeft;
+      scroller.scrollLeft = scrollLeft - (x - startX);
+    });
+    addEventListener('pointerup', () => {
+      if (isDown) { isDown = false; scroller.style.scrollSnapType = ''; }
+    });
+  };
+  enableDrag($('#scrollerFeatured'));
+  enableDrag($('#scrollerLatest'));
+
+  const filterBar = $('#pjFilterBar'), grid = $('#pjGrid'), countEl = $('#pjCount');
+  if (filterBar && grid) {
+    filterBar.addEventListener('click', e => {
+      const btn = e.target.closest('.pj-filter-btn');
+      if (!btn) return;
+      $$('.pj-filter-btn', filterBar).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.cat;
+      const list = cat === 'All' ? projects : projects.filter(p => p.category === cat);
+      grid.innerHTML = list.map(p => renderCard(p, false)).join('');
+      if (countEl) countEl.textContent = list.length;
+      watch(grid);
+    });
+  }
 }
 
 /* ---------- project page ---------- */
@@ -530,7 +667,7 @@ function initMagnetic() {
       getJSON('data/site.json'), getJSON('data/projects.json'), getJSON('data/maintainers.json'), getJSON('data/devices.json')]);
     D = { site, projects, maintainers, devices };
     renderChrome(site);
-    if (home) renderHome(D); else if (page === 'project') renderProject(D); else if (page === 'devices') renderDevices(devices, projects); else renderRequest(D);
+    if (home) renderHome(D); else if (page === 'projects') renderProjectsPage(D); else if (page === 'project') renderProject(D); else if (page === 'devices') renderDevices(devices, projects); else renderRequest(D);
     watch();
     document.addEventListener('click', e => {
       const row = e.target.closest('.row');

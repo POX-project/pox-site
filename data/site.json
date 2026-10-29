@@ -60,7 +60,11 @@
     "screenshots": "Screenshots",
     "changelog": "Changelog & Releases",
     "latestVersion": "Latest Version",
-    "maintainer": "Maintainer"
+    "maintainer": "Maintainer",
+    "featuredProjects": "Featured Projects",
+    "latestUpdated": "Latest Updated",
+    "allProjects": "All Projects",
+    "allCategories": "All"
   },
   "footer": {
     "note": "Built for stability."

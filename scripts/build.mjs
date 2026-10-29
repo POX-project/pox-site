@@ -7,7 +7,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const dist = join(root, 'dist');
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
-for (const f of ['index.html', 'devices.html', 'project.html', 'request.html', 'css', 'js', 'data', 'assets']) {
+for (const f of ['index.html', 'devices.html', 'projects.html', 'project.html', 'request.html', 'css', 'js', 'data', 'assets']) {
   await cp(join(root, f), join(dist, f), { recursive: true });
 }
 console.log('Built site into dist/');

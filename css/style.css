@@ -318,6 +318,78 @@ a{color:inherit;text-decoration:none}
 .row .device-art{align-self:center}
 .row:hover .device-phone,.row.open .device-phone,.row:focus-within .device-phone{transform:rotate(-6deg) translateY(-6px)}
 
+/* PROJECTS CATALOG PAGE */
+.pj-page{padding:9rem clamp(20px,5vw,48px) 6rem;display:flex;flex-direction:column;gap:clamp(48px,6vw,84px)}
+.pj-hero{max-width:880px}
+.pj-hero h1{font-size:clamp(2.5rem,7vw,5.5rem);line-height:1.05;letter-spacing:-.05em;font-weight:700;margin:10px 0 16px}
+.pj-hero p{font-size:clamp(1rem,1.6vw,1.25rem);line-height:1.65;opacity:.85;max-width:720px}
+
+/* Horizontal rows for categories (Featured & Latest Updated) */
+.pj-section{display:flex;flex-direction:column;gap:24px}
+.pj-section-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:14px}
+.pj-title-wrap{display:flex;align-items:center;gap:14px}
+.pj-section-head h2{font-size:clamp(1.6rem,3.6vw,2.6rem);letter-spacing:-.04em;line-height:1.1;font-weight:700}
+.pj-badge{font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:9999px;background:var(--mint);color:var(--navy);letter-spacing:.04em}
+.pj-hint{font-size:.8rem;text-transform:uppercase;letter-spacing:.15em;font-weight:600;color:var(--a)}
+
+.pj-row-scroller{
+  display:flex;gap:clamp(18px,2.2vw,28px);overflow-x:auto;scroll-snap-type:x proximity;
+  padding:10px 4px 24px;scrollbar-width:none;cursor:grab;touch-action:pan-x pan-y;
+}
+.pj-row-scroller::-webkit-scrollbar{display:none}
+.pj-row-scroller:active{cursor:grabbing}
+
+.pj-row-card{
+  flex:0 0 clamp(310px,36vw,440px);scroll-snap-align:start;
+  display:flex;flex-direction:column;gap:16px;padding:24px;
+  background:color-mix(in srgb,currentColor 4%,transparent);
+  border:1px solid color-mix(in srgb,currentColor 12%,transparent);
+  border-radius:24px;transition:transform .4s var(--ease),border-color .3s;
+}
+.pj-row-card,.pj-grid-card{opacity:1}
+.pj-row-card:hover{transform:translateY(-6px);border-color:var(--mint)}
+.pj-thumb{width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:var(--navy);position:relative}
+.pj-thumb .ph{width:100%;height:100%;border-radius:14px;aspect-ratio:16/9}
+.pj-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
+.pj-row-card:hover .pj-thumb img,.pj-grid-card:hover .pj-thumb img{transform:scale(1.05)}
+.pj-card-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.pj-card-title{font-size:clamp(1.2rem,2vw,1.45rem);font-weight:700;letter-spacing:-.03em;line-height:1.2}
+.pj-card-title a{transition:color .25s var(--ease)}
+.pj-card-title a:hover{color:var(--mint)}
+.pj-cat-badge{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:6px;background:color-mix(in srgb,currentColor 10%,transparent);color:inherit;letter-spacing:.05em;text-transform:uppercase}
+.pj-card-desc{font-size:.92rem;line-height:1.6;opacity:.82;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pj-card-meta{display:flex;flex-direction:column;gap:12px;margin-top:auto}
+.pj-card-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}
+
+/* All Projects Category Filters */
+.pj-filter-bar{display:flex;flex-wrap:wrap;gap:8px 12px;margin-top:4px}
+.pj-filter-btn{
+  padding:7px 18px;border-radius:9999px;font:inherit;font-size:.82rem;font-weight:600;
+  background:color-mix(in srgb,currentColor 6%,transparent);color:inherit;
+  border:1px solid color-mix(in srgb,currentColor 14%,transparent);cursor:pointer;
+  transition:all .25s var(--ease);
+}
+.pj-filter-btn:hover{background:var(--mint);color:var(--navy);border-color:var(--mint);transform:translateY(-2px)}
+.pj-filter-btn.active{background:var(--coral);color:var(--light);border-color:var(--coral)}
+
+/* All Projects Grid: 1 col on mobile, multi-col on big screens */
+.pj-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:clamp(20px,2.5vw,32px);
+}
+@media(max-width:820px){
+  .pj-grid{grid-template-columns:1fr}
+  .pj-row-card{flex:0 0 85vw}
+}
+
+.pj-grid-card{
+  display:flex;flex-direction:column;gap:16px;padding:24px;
+  background:color-mix(in srgb,currentColor 4%,transparent);
+  border:1px solid color-mix(in srgb,currentColor 12%,transparent);
+  border-radius:24px;transition:transform .4s var(--ease),border-color .3s;
+}
+.pj-grid-card:hover{transform:translateY(-6px);border-color:var(--a)}
+
 /* MOBILE: one blur surface, explicit navigation, and readable static rows. */
 @media(max-width:900px){
   html{scroll-snap-type:none}
