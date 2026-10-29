@@ -346,31 +346,36 @@ function renderProjectsPage({ site, projects, maintainers }) {
 
   const categories = ['All', ...new Set(projects.map(p => p.category).filter(Boolean))];
 
-  const renderCard = (p, isRow = false) => `
-    <article class="${isRow ? 'pj-row-card' : 'pj-grid-card'} rv">
-      <div class="pj-thumb">${box(p.image, p.name, ini(p.name), 'pimg')}</div>
-      <div class="pj-card-top">
-        <h3 class="pj-card-title"><a href="${projectUrl(p)}">${esc(p.name)}</a></h3>
-        <div style="display:flex;align-items:center;gap:6px">
+  const renderItem = (p, isRow = false) => {
+    const latestDate = p.changelog && p.changelog[0] ? p.changelog[0].date : null;
+    return `
+    <article class="${isRow ? 'pj-row-item' : 'pj-grid-item'} rv">
+      <div class="pj-item-header">
+        <div class="pj-item-meta-top">
           ${p.category ? `<span class="pj-cat-badge">${esc(p.category)}</span>` : ''}
           ${p.version ? `<span class="v-tag sm">${esc(p.version)}</span>` : ''}
+          ${latestDate ? `<span class="pj-date">${esc(latestDate)}</span>` : ''}
         </div>
+        <h3 class="pj-item-title">
+          <a href="${projectUrl(p)}">${esc(p.name)} <span class="arr" aria-hidden="true">→</span></a>
+        </h3>
       </div>
-      <p class="pj-card-desc">${esc(p.description)}</p>
-      <div class="pj-card-meta">
+      <p class="pj-item-desc">${esc(p.description)}</p>
+      <div class="pj-item-footer">
         ${getMaintainers(p, maintainers).length ? `
         <div class="panel-m">
           <span class="pm-lbl">${esc(L.maintainer || 'Maintainer')}:</span>
           ${maintainerBadgesHtml(p, maintainers, true)}
         </div>` : ''}
         <div class="chips">${chipsHtml(p.supportedPhones || [])}</div>
-      </div>
-      <div class="pj-card-actions">
-        <a class="btn go" href="${projectUrl(p)}">${esc(L.projectPage || 'Page')} <span class="arr">→</span></a>
-        ${p.github ? `<a class="btn coral" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(L.github || 'GitHub')} <span class="arr">↗</span></a>` : ''}
+        <div class="pj-item-links">
+          <a class="pj-link" href="${projectUrl(p)}">${esc(L.projectPage || 'Explore project')} <span class="arr" aria-hidden="true">→</span></a>
+          ${p.github ? `<a class="pj-link-gh" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(L.github || 'GitHub')} <span class="arr" aria-hidden="true">↗</span></a>` : ''}
+        </div>
       </div>
     </article>
   `;
+  };
 
   el.innerHTML = `
     <div class="pj-page wrap">
@@ -390,7 +395,7 @@ function renderProjectsPage({ site, projects, maintainers }) {
           <span class="pj-hint">Scroll or drag to browse</span>
         </div>
         <div class="pj-row-scroller" id="scrollerFeatured">
-          ${featured.map(p => renderCard(p, true)).join('')}
+          ${featured.map(p => renderItem(p, true)).join('')}
         </div>
       </section>` : ''}
 
@@ -404,7 +409,7 @@ function renderProjectsPage({ site, projects, maintainers }) {
           <span class="pj-hint">Recent releases &amp; changelogs</span>
         </div>
         <div class="pj-row-scroller" id="scrollerLatest">
-          ${latestUpdated.map(p => renderCard(p, true)).join('')}
+          ${latestUpdated.map(p => renderItem(p, true)).join('')}
         </div>
       </section>` : ''}
 
@@ -419,7 +424,7 @@ function renderProjectsPage({ site, projects, maintainers }) {
           ${categories.map((c, i) => `<button class="pj-filter-btn${i === 0 ? ' active' : ''}" type="button" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
         </div>
         <div class="pj-grid" id="pjGrid">
-          ${projects.map(p => renderCard(p, false)).join('')}
+          ${projects.map(p => renderItem(p, false)).join('')}
         </div>
       </section>
     </div>
@@ -456,7 +461,7 @@ function renderProjectsPage({ site, projects, maintainers }) {
       btn.classList.add('active');
       const cat = btn.dataset.cat;
       const list = cat === 'All' ? projects : projects.filter(p => p.category === cat);
-      grid.innerHTML = list.map(p => renderCard(p, false)).join('');
+      grid.innerHTML = list.map(p => renderItem(p, false)).join('');
       if (countEl) countEl.textContent = list.length;
       watch(grid);
     });
