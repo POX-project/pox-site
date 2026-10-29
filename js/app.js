@@ -349,26 +349,26 @@ function renderProjectsPage({ site, projects, maintainers }) {
   const renderItem = (p, isRow = false) => {
     const latestDate = p.changelog && p.changelog[0] ? p.changelog[0].date : null;
     return `
-    <article class="${isRow ? 'pj-row-item' : 'pj-grid-item'} rv">
-      <div class="pj-item-header">
-        <div class="pj-item-meta-top">
+    <article class="pj-card ${isRow ? 'pj-row-card' : 'pj-grid-card'} rv">
+      <div class="pj-card-head">
+        <div class="pj-card-meta">
           ${p.category ? `<span class="pj-cat-badge">${esc(p.category)}</span>` : ''}
           ${p.version ? `<span class="v-tag sm">${esc(p.version)}</span>` : ''}
           ${latestDate ? `<span class="pj-date">${esc(latestDate)}</span>` : ''}
         </div>
-        <h3 class="pj-item-title">
+        <h3 class="pj-card-title">
           <a href="${projectUrl(p)}">${esc(p.name)} <span class="arr" aria-hidden="true">→</span></a>
         </h3>
       </div>
-      <p class="pj-item-desc">${esc(p.description)}</p>
-      <div class="pj-item-footer">
+      <p class="pj-card-desc">${esc(p.description)}</p>
+      <div class="pj-card-foot">
         ${getMaintainers(p, maintainers).length ? `
         <div class="panel-m">
           <span class="pm-lbl">${esc(L.maintainer || 'Maintainer')}:</span>
           ${maintainerBadgesHtml(p, maintainers, true)}
         </div>` : ''}
         <div class="chips">${chipsHtml(p.supportedPhones || [])}</div>
-        <div class="pj-item-links">
+        <div class="pj-card-links">
           <a class="pj-link" href="${projectUrl(p)}">${esc(L.projectPage || 'Explore project')} <span class="arr" aria-hidden="true">→</span></a>
           ${p.github ? `<a class="pj-link-gh" href="${esc(p.github)}" target="_blank" rel="noopener noreferrer">${esc(L.github || 'GitHub')} <span class="arr" aria-hidden="true">↗</span></a>` : ''}
         </div>
@@ -378,16 +378,18 @@ function renderProjectsPage({ site, projects, maintainers }) {
   };
 
   el.innerHTML = `
-    <div class="pj-page wrap">
-      <section class="pj-hero rv">
-        <p class="eyebrow">POX Ecosystem</p>
-        <h1>${esc(L.allProjects || 'All Projects')}.</h1>
-        <p>Explore custom Linux kernels, Android system managers, CLI toolsets, and device trees built for daily-driver stability.</p>
+    <div class="pj-page">
+      <section class="pj-hero">
+        <div class="pj-hero-inner rv">
+          <p class="eyebrow">POX Ecosystem</p>
+          <h1>${esc(L.allProjects || 'All Projects')}.</h1>
+          <p>Explore custom Linux kernels, Android system managers, CLI toolsets, and device trees built for daily-driver stability.</p>
+        </div>
       </section>
 
       ${featured.length ? `
-      <section class="pj-section rv">
-        <div class="pj-section-head">
+      <section class="pj-section pj-row-section" id="secFeatured">
+        <div class="pj-section-head rv">
           <div class="pj-title-wrap">
             <h2>${esc(L.featuredProjects || 'Featured Projects')}</h2>
             <span class="pj-badge">${featured.length}</span>
@@ -400,8 +402,8 @@ function renderProjectsPage({ site, projects, maintainers }) {
       </section>` : ''}
 
       ${latestUpdated.length ? `
-      <section class="pj-section rv">
-        <div class="pj-section-head">
+      <section class="pj-section pj-row-section" id="secLatest">
+        <div class="pj-section-head rv">
           <div class="pj-title-wrap">
             <h2>${esc(L.latestUpdated || 'Latest Updated')}</h2>
             <span class="pj-badge">${latestUpdated.length}</span>
@@ -413,14 +415,14 @@ function renderProjectsPage({ site, projects, maintainers }) {
         </div>
       </section>` : ''}
 
-      <section class="pj-section rv" id="allProjectsSection">
-        <div class="pj-section-head">
+      <section class="pj-section pj-all-section" id="allProjectsSection">
+        <div class="pj-section-head rv">
           <div class="pj-title-wrap">
             <h2>All Projects Catalog</h2>
             <span class="pj-badge" id="pjCount">${projects.length}</span>
           </div>
         </div>
-        <div class="pj-filter-bar" id="pjFilterBar">
+        <div class="pj-filter-bar rv" id="pjFilterBar">
           ${categories.map((c, i) => `<button class="pj-filter-btn${i === 0 ? ' active' : ''}" type="button" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}
         </div>
         <div class="pj-grid" id="pjGrid">
@@ -686,9 +688,9 @@ function initMagnetic() {
     });
     initScroll();
     initMagnetic();
-    if (home && location.hash.length > 1) {
+    if (location.hash.length > 1) {
       const t = $(location.hash);
-      if (t) setTimeout(() => t.scrollIntoView({ behavior: 'instant' }), 30);
+      if (t) setTimeout(() => t.scrollIntoView({ behavior: 'instant' }), 40);
     }
   } catch (err) {
     console.error(err);
