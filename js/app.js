@@ -3,7 +3,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const getJSON = u => fetch(u).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+const getJSON = u => fetch(`${u}?v=${Date.now()}`).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
 const page = document.body.dataset.page, home = page === 'home';
 const link = t => (t.startsWith('#') && !home) ? 'index.html' + t : t;
 const isExt = u => /^https?:/.test(u);
