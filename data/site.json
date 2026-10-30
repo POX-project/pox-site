@@ -73,13 +73,14 @@
     "title": "Request",
     "subtitle": "Tell us which device or feature you want next. We read every request.",
     "submitLabel": "Send request",
-    "successText": "Opening your request...",
+    "successText": "Request received! Thank you for reaching out.",
+    "fallbackText": "Connecting to Telegram fallback...",
     "errorText": "Please fill the required fields.",
     "submit": {
-      "type": "github-issue",
-      "url": "https://github.com/pox-project/requests/issues/new",
-      "to": "requests@pox-project.org",
-      "titlePrefix": "[Request]"
+      "type": "netlify-form",
+      "formName": "request",
+      "telegramFallback": "https://t.me/txorav",
+      "titlePrefix": "[POX Request]"
     },
     "fields": [
       {

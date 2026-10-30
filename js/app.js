@@ -666,20 +666,43 @@ function renderRequest({ site, projects }) {
     <p>${esc(R.subtitle)}</p>
   </section>
   <section class="rform" data-theme="light">
-    <form id="form" novalidate>
+    <form id="form" name="${esc(R.submit.formName || 'request')}" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="${esc(R.submit.formName || 'request')}">
+      <p style="display:none"><label>Bot check: <input name="bot-field"></label></p>
       ${R.fields.map(field).join('')}
       <div class="actions rv">
-        <button class="btn big" type="submit">${esc(R.submitLabel)} <span class="arr">→</span></button>
+        <button class="btn big" type="submit" id="submitBtn">${esc(R.submitLabel)} <span class="arr">→</span></button>
+        <a class="btn mint sm" id="directTgBtn" href="${esc(R.submit.telegramFallback || 'https://t.me/txorav')}" target="_blank" rel="noopener noreferrer">Send via Telegram ↗</a>
         <span class="status" id="status" role="status"></span>
       </div>
     </form>
   </section>`;
 
-  const form = $('#form'), st = $('#status');
+  const form = $('#form'), st = $('#status'), submitBtn = $('#submitBtn'), tgBtn = $('#directTgBtn');
   const device = new URLSearchParams(location.search).get('device');
   if (device && form.elements.device) form.elements.device.value = device;
-  form.addEventListener('input', e => e.target.closest('.field')?.classList.remove('err'));
-  form.addEventListener('submit', e => {
+
+  const buildTelegramUrl = vals => {
+    const lines = [
+      `🚀 ${R.submit.titlePrefix || '[POX Request]'}`,
+      ...vals.filter(([, v]) => v).map(([f, v]) => `• ${f.label}: ${v}`)
+    ];
+    return `${R.submit.telegramFallback || 'https://t.me/txorav'}?text=${encodeURIComponent(lines.join('\n'))}`;
+  };
+
+  const updateDirectTgLink = () => {
+    if (!tgBtn) return;
+    const vals = R.fields.map(f => [f, form.elements[f.id] ? form.elements[f.id].value.trim() : '']).filter(([, v]) => v);
+    tgBtn.href = vals.length ? buildTelegramUrl(vals) : (R.submit.telegramFallback || 'https://t.me/txorav');
+  };
+
+  form.addEventListener('input', e => {
+    e.target.closest('.field')?.classList.remove('err');
+    updateDirectTgLink();
+  });
+  updateDirectTgLink();
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     let ok = true; const vals = [];
     R.fields.forEach(f => {
@@ -689,14 +712,61 @@ function renderRequest({ site, projects }) {
       vals.push([f, v]);
     });
     if (!ok) { st.textContent = R.errorText; st.className = 'status bad'; return; }
+
+    const tgUrl = buildTelegramUrl(vals);
     const title = `${R.submit.titlePrefix || ''} ${vals.filter(([f]) => f.inTitle).map(([, v]) => v).join(' — ')}`.trim();
     const md = vals.filter(([, v]) => v).map(([f, v]) => `**${f.label}:** ${v}`).join('\n\n');
-    const plain = vals.filter(([, v]) => v).map(([f, v]) => `${f.label}: ${v}`).join('\n');
-    st.textContent = R.successText; st.className = 'status good';
+
     if (R.submit.type === 'mailto') {
+      const plain = vals.filter(([, v]) => v).map(([f, v]) => `${f.label}: ${v}`).join('\n');
       location.href = `mailto:${R.submit.to}?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(plain)}`;
-    } else {
+      return;
+    }
+
+    if (R.submit.type === 'github-issue') {
       window.open(`${R.submit.url}?title=${encodeURIComponent(title)}&body=${encodeURIComponent(md)}`, '_blank', 'noopener');
+      st.textContent = R.successText; st.className = 'status good';
+      return;
+    }
+
+    /* Netlify Form with Telegram Fallback */
+    st.textContent = 'Submitting request...'; st.className = 'status';
+    if (submitBtn) submitBtn.disabled = true;
+
+    const payload = new URLSearchParams();
+    payload.append('form-name', R.submit.formName || 'request');
+    vals.forEach(([f, v]) => payload.append(f.id, v));
+
+    let netlifyOk = false;
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: payload.toString()
+      });
+      if (res.ok) {
+        netlifyOk = true;
+      }
+    } catch (err) {
+      netlifyOk = false;
+    }
+
+    if (submitBtn) submitBtn.disabled = false;
+
+    if (netlifyOk) {
+      st.innerHTML = `${esc(R.successText || 'Request received!')} <a class="device-link" href="${esc(tgUrl)}" target="_blank" rel="noopener noreferrer" style="margin-left:8px">Also send on Telegram ↗</a>`;
+      st.className = 'status good';
+      form.reset();
+      updateDirectTgLink();
+    } else {
+      /* Fallback to Telegram */
+      st.textContent = R.fallbackText || 'Netlify form unavailable — redirecting to Telegram...';
+      st.className = 'status bad';
+      setTimeout(() => {
+        window.open(tgUrl, '_blank', 'noopener');
+        st.innerHTML = `Opened in Telegram! <a class="device-link" href="${esc(tgUrl)}" target="_blank" rel="noopener noreferrer">Click here if Telegram didn't open ↗</a>`;
+        st.className = 'status good';
+      }, 400);
     }
   });
 }

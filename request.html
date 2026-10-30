@@ -23,6 +23,16 @@
     </div>
   </nav>
 </header>
+<!-- Netlify Forms build detector for SPA/JS form -->
+<form name="request" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="request">
+  <input name="bot-field">
+  <input type="text" name="name">
+  <input type="text" name="contact">
+  <input type="text" name="project">
+  <input type="text" name="device">
+  <textarea name="message"></textarea>
+</form>
 <main id="request"></main>
 <footer class="footer" id="footer" data-theme="indigo"></footer>
 <script src="js/app.js?v=12"></script>
