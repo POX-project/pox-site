@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=12">
+<link rel="stylesheet" href="css/style.css?v=13">
 </head>
 <body data-page="home" data-theme="indigo">
 <div class="pblur" aria-hidden="true"><i class="tint"></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -51,6 +51,16 @@
 </main>
 
 <footer class="footer" id="footer" data-theme="indigo"></footer>
-<script src="js/app.js?v=12"></script>
+<!-- Netlify Forms build detector for SPA/JS form -->
+<form name="request" method="POST" action="/" data-netlify="true" netlify netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="request">
+  <input name="bot-field">
+  <input type="text" name="name">
+  <input type="text" name="contact">
+  <input type="text" name="project">
+  <input type="text" name="device">
+  <textarea name="message"></textarea>
+</form>
+<script src="js/app.js?v=13"></script>
 </body>
 </html>

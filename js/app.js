@@ -666,7 +666,7 @@ function renderRequest({ site, projects }) {
     <p>${esc(R.subtitle)}</p>
   </section>
   <section class="rform" data-theme="light">
-    <form id="form" name="${esc(R.submit.formName || 'request')}" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <form id="form" name="${esc(R.submit.formName || 'request')}" method="POST" action="/" data-netlify="true" netlify netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="${esc(R.submit.formName || 'request')}">
       <p style="display:none"><label>Bot check: <input name="bot-field"></label></p>
       ${R.fields.map(field).join('')}
@@ -733,40 +733,61 @@ function renderRequest({ site, projects }) {
     st.textContent = 'Submitting request...'; st.className = 'status';
     if (submitBtn) submitBtn.disabled = true;
 
-    const payload = new URLSearchParams();
-    payload.append('form-name', R.submit.formName || 'request');
-    vals.forEach(([f, v]) => payload.append(f.id, v));
+    const formData = new FormData(form);
+    formData.set('form-name', R.submit.formName || 'request');
+    const encodedBody = new URLSearchParams(formData).toString();
 
     let netlifyOk = false;
-    try {
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: payload.toString()
-      });
-      if (res.ok) {
-        netlifyOk = true;
+    let errorReason = '';
+
+    const isLocal = ['localhost', '127.0.0.1', '0.0.0.0'].includes(location.hostname);
+
+    if (!isLocal) {
+      try {
+        let res = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encodedBody
+        });
+        if (res.ok || res.status === 200 || res.status === 204 || res.status === 303 || res.redirected) {
+          netlifyOk = true;
+        } else if (res.status === 404) {
+          res = await fetch(location.pathname || '/request.html', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: encodedBody
+          });
+          if (res.ok || res.status === 200 || res.status === 204 || res.status === 303 || res.redirected) {
+            netlifyOk = true;
+          } else {
+            errorReason = 'Netlify forms returned 404 (Form detection may be disabled in Netlify dashboard)';
+          }
+        } else {
+          errorReason = `Netlify returned status ${res.status}`;
+        }
+      } catch (err) {
+        errorReason = err.message || 'Network error';
       }
-    } catch (err) {
-      netlifyOk = false;
+    } else {
+      errorReason = 'Local server does not support Netlify forms (active on live site)';
     }
 
     if (submitBtn) submitBtn.disabled = false;
 
     if (netlifyOk) {
-      st.innerHTML = `${esc(R.successText || 'Request received!')} <a class="device-link" href="${esc(tgUrl)}" target="_blank" rel="noopener noreferrer" style="margin-left:8px">Also send on Telegram ↗</a>`;
+      st.innerHTML = `✓ ${esc(R.successText || 'Request received!')} <a class="device-link" href="${esc(tgUrl)}" target="_blank" rel="noopener noreferrer" style="margin-left:8px">Also send copy on Telegram ↗</a>`;
       st.className = 'status good';
       form.reset();
       updateDirectTgLink();
     } else {
       /* Fallback to Telegram */
-      st.textContent = R.fallbackText || 'Netlify form unavailable — redirecting to Telegram...';
+      st.innerHTML = `<span style="display:block;margin-bottom:6px;font-size:0.85em;opacity:0.85">${esc(errorReason)}</span><strong>Connecting to Telegram...</strong> <a class="device-link" href="${esc(tgUrl)}" target="_blank" rel="noopener noreferrer" style="margin-left:6px">Open Telegram ↗</a>`;
       st.className = 'status bad';
       setTimeout(() => {
         window.open(tgUrl, '_blank', 'noopener');
         st.innerHTML = `Opened in Telegram! <a class="device-link" href="${esc(tgUrl)}" target="_blank" rel="noopener noreferrer">Click here if Telegram didn't open ↗</a>`;
         st.className = 'status good';
-      }, 400);
+      }, 700);
     }
   });
 }
